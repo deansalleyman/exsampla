@@ -29,56 +29,12 @@ import {createStackNavigator} from 'react-navigation-stack';
 
 import HomeScreen from './project_media/common/js/components/HomeScreen'
 import ProfileScreen from './project_media/common/js/components/ProfileScreen';
+import AuthLoadingScreen from './project_media/common/js/components/AuthLoadingScreen'
+import SignInScreen from './project_media/common/js/components/SignInScreen';
+
+const AuthStack = createStackNavigator({ SignIn: SignInScreen });
 
 
-
-// const App: () => React$Node = () => {
-//   return (
-//     <>
-//       <StatusBar barStyle="dark-content" />
-//       <SafeAreaView>
-//         <ScrollView
-//           contentInsetAdjustmentBehavior="automatic"
-//           style={styles.scrollView}>
-//           <Header />
-//           {global.HermesInternal == null ? null : (
-//             <View style={styles.engine}>
-//               <Text style={styles.footer}>Engine: Hermes</Text>
-//             </View>
-//           )}
-//           <View style={styles.body}>
-//             <View style={styles.sectionContainer}>
-//               <Text style={styles.sectionTitle}>Hello World</Text>
-//               <Text style={styles.sectionDescription}>
-//                 Edit <Text style={styles.highlight}>App.js</Text> to change this
-//                 screen and then come back to see your edits...
-//               </Text>
-//             </View>
-//             <View style={styles.sectionContainer}>
-//               <Text style={styles.sectionTitle}>See Your Changes</Text>
-//               <Text style={styles.sectionDescription}>
-//                 <ReloadInstructions />
-//               </Text>
-//             </View>
-//             <View style={styles.sectionContainer}>
-//               <Text style={styles.sectionTitle}>Debug</Text>
-//               <Text style={styles.sectionDescription}>
-//                 <DebugInstructions />
-//               </Text>
-//             </View>
-//             <View style={styles.sectionContainer}>
-//               <Text style={styles.sectionTitle}>Learn More</Text>
-//               <Text style={styles.sectionDescription}>
-//                 Read the docs to discover what to do next:
-//               </Text>
-//             </View>
-//             <LearnMoreLinks />
-//           </View>
-//         </ScrollView>
-//       </SafeAreaView>
-//     </>
-//   );
-// };
 
 const styles = StyleSheet.create({
   scrollView: {
@@ -120,11 +76,22 @@ const styles = StyleSheet.create({
 });
 
 
-const MainNavigator = createStackNavigator({
+const AppStack = createStackNavigator({
   Home: {screen: HomeScreen},
   Profile: {screen: ProfileScreen},
 });
 
-const App = createAppContainer(MainNavigator);
 
-export default App;
+
+export default createAppContainer(
+  createSwitchNavigator(
+    {
+      AuthLoading: AuthLoadingScreen,
+      App: AppStack,
+      Auth: AuthStack,
+    },
+    {
+      initialRouteName: 'AuthLoading',
+    }
+  )
+);
