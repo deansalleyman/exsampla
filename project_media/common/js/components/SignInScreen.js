@@ -1,24 +1,36 @@
 import React from 'react';
-import { View, Text, Button } from 'react-native';
-import { createAppContainer } from 'react-navigation';
-import { createStackNavigator } from 'react-navigation-stack';
+import {
+  ActivityIndicator,
+  Button,
+  StatusBar,
+  StyleSheet,
+  View,
+} from 'react-native';
+import AsyncStorage from '@react-native-community/async-storage';
 
-export default function SignInScreen(props){
+export default function SignInScreen(props) {
 
-      const {navigate} = props.navigation;
-
+  
       return (
-        <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-        <Text>Home Screen</Text>
-        <Button
-          title="Go to Jane's profile"
-          onPress={() => navigate('Profile', {name: 'Jane'})}
-        />
+        <View style={styles.container}>
+          <Button title="Sign in!" onPress={_signInAsync} />
         </View>
       );
-   
+
+  
+    _signInAsync = async () => {
+
+        try {
+            await AsyncStorage.setItem('userToken', 'abc');
+            props.navigation.navigate('App');
+          } catch (error) {
+            // Error saving data
+          }
+
+     
+    };
   }
 
   SignInScreen.navigationOptions = {
-    title: 'Sign In',
+    title: 'Please sign in',
   };
