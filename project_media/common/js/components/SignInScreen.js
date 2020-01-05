@@ -10,7 +10,27 @@ import AsyncStorage from '@react-native-community/async-storage';
 
 export default function SignInScreen(props) {
 
-  
+    const styles = StyleSheet.create({
+        container: {
+          flex: 1,
+          alignItems: 'center',
+          justifyContent: 'center',
+        },
+      });
+      const _signInAsync = async () => {
+
+        try {
+            console.log('_signInAsync');
+            await AsyncStorage.setItem('userToken', 'abc');
+            props.navigation.navigate('App');
+          } catch (error) {
+            console.log('error', error);
+            // Error saving data
+          }
+
+     
+    };
+
       return (
         <View style={styles.container}>
           <Button title="Sign in!" onPress={_signInAsync} />
@@ -18,17 +38,7 @@ export default function SignInScreen(props) {
       );
 
   
-    _signInAsync = async () => {
 
-        try {
-            await AsyncStorage.setItem('userToken', 'abc');
-            props.navigation.navigate('App');
-          } catch (error) {
-            // Error saving data
-          }
-
-     
-    };
   }
 
   SignInScreen.navigationOptions = {

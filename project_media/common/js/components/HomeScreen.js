@@ -13,10 +13,15 @@ export default function HomeScreen(props){
       };
     
       _signOutAsync = async () => {
+        console.log('test')
       try{
-        await AsyncStorage.clear();
+        const asyncStorageKeys = await AsyncStorage.getAllKeys();
+        if (asyncStorageKeys.length > 0) {
+          AsyncStorage.clear();
+        }
         props.navigation.navigate('Auth');
       } catch (error) {
+        console.log('error', error);
         // Error saving data
       }
       };
