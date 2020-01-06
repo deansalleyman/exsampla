@@ -7,8 +7,10 @@ import {
   View,
 } from 'react-native';
 import AsyncStorage from '@react-native-community/async-storage';
+import { useNavigation, useNavigationParam } from 'react-navigation-hooks';
 
 export default function SignInScreen(props) {
+    const { navigate } = useNavigation();
 
     const styles = StyleSheet.create({
         container: {
@@ -22,7 +24,7 @@ export default function SignInScreen(props) {
         try {
             console.log('_signInAsync');
             await AsyncStorage.setItem('userToken', 'abc');
-            props.navigation.navigate('App');
+            navigate('App');
           } catch (error) {
             console.log('error', error);
             // Error saving data

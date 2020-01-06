@@ -3,13 +3,15 @@ import { View, Text, Button } from 'react-native';
 import { createAppContainer } from 'react-navigation';
 import { createStackNavigator } from 'react-navigation-stack';
 import AsyncStorage from '@react-native-community/async-storage';
+import { useNavigation, useNavigationParam } from 'react-navigation-hooks';
 
 export default function HomeScreen(props){
 
-      const {navigate} = props.navigation;
+     // const {navigate} = props.navigation;
+      const { navigate } = useNavigation();
 
       _showMoreApp = () => {
-        props.navigation.navigate('Other');
+        navigate('Profile');
       };
     
       _signOutAsync = async () => {
@@ -19,7 +21,7 @@ export default function HomeScreen(props){
         if (asyncStorageKeys.length > 0) {
           AsyncStorage.clear();
         }
-        props.navigation.navigate('Auth');
+        navigate('Auth');
       } catch (error) {
         console.log('error', error);
         // Error saving data
@@ -33,7 +35,7 @@ export default function HomeScreen(props){
           title="Go to Jane's profile"
           onPress={() => navigate('Profile', {name: 'Jane'})}
         />
-          <Button title="Show me more of the app" onPress={_showMoreApp} />
+          <Button title="Show the Profile" onPress={_showMoreApp} />
           <Button title="Actually, sign me out :)" onPress={_signOutAsync} />
         </View>
       );
@@ -41,5 +43,5 @@ export default function HomeScreen(props){
   }
 
   HomeScreen.navigationOptions = {
-    title: 'Welcome'
+    title: 'Home Screen'
   };
