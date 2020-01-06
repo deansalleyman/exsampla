@@ -32,6 +32,60 @@ import ProfileScreen from './project_media/common/js/components/ProfileScreen';
 import AuthLoadingScreen from './project_media/common/js/components/AuthLoadingScreen'
 import SignInScreen from './project_media/common/js/components/SignInScreen';
 
+import { Provider } from 'react-redux'
+import { createStore, applyMiddleware } from 'redux'
+import rootReducer from './project_media/common/js/reducers';
+
+import { connect } from 'react-redux';
+
+import { setRemoteData , fetchRemoteData, fetchInitialData} from './project_media/common/js/actions';
+
+import rootEpic from './project_media/common/js/epics';
+
+import { createEpicMiddleware } from 'redux-observable';
+
+import { throttle } from 'lodash';
+
+import { saveState } from './project_media/common/js/localStorage';
+
+const epicMiddleware = createEpicMiddleware();
+
+
+
+
+const mapStateToProps = state => {
+  return {
+    remoteData: state.remoteData
+  }
+}
+
+const mapDispatchToProps = dispatch => {
+  return {
+    fetchRemoteData: (range = '') => {
+      dispatch(fetchRemoteData(range))
+    },
+    setRemoteData: data => {
+      dispatch(setRemoteData(data))
+    },
+    fetchInitialData: (user = '') => {
+      dispatch(fetchInitialData(user))
+    },
+  }
+}
+
+
+const AppHolderContainer = connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(AppHolder)
+
+
+const store = createStore(
+  rootReducer,
+  applyMiddleware(epicMiddleware));
+
+  epicMiddleware.run(rootEpic);
+
 const AuthStack = createStackNavigator({ SignIn: SignInScreen });
 
 

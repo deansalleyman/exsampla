@@ -1,0 +1,4 @@
+export const appConstants = {
+    CURRENT_RESEARCH_PAGE: 'APP_CURRENT_RESEARCH_PAGE',
+    CLOSE:'APP_CLOSE'
+}
