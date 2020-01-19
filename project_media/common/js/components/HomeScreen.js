@@ -7,6 +7,8 @@ import { useNavigation, useNavigationParam } from 'react-navigation-hooks';
 
 export default function HomeScreen(props){
 
+  console.log('props', props)
+
      // const {navigate} = props.navigation;
       const { navigate } = useNavigation();
 

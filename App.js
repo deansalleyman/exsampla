@@ -53,31 +53,25 @@ const epicMiddleware = createEpicMiddleware();
 
 
 
-// const mapStateToProps = state => {
-//   return {
-//     remoteData: state.remoteData
-//   }
-// }
+const mapStateToProps = state => {
+  return {
+    remoteData: state.remoteData
+  }
+}
 
-// const mapDispatchToProps = dispatch => {
-//   return {
-//     fetchRemoteData: (range = '') => {
-//       dispatch(fetchRemoteData(range))
-//     },
-//     setRemoteData: data => {
-//       dispatch(setRemoteData(data))
-//     },
-//     fetchInitialData: (user = '') => {
-//       dispatch(fetchInitialData(user))
-//     },
-//   }
-// }
-
-
-// const AppHolderContainer = connect(
-//   mapStateToProps,
-//   mapDispatchToProps
-// )(AppHolder)
+const mapDispatchToProps = dispatch => {
+  return {
+    fetchRemoteData: (range = '') => {
+      dispatch(fetchRemoteData(range))
+    },
+    setRemoteData: data => {
+      dispatch(setRemoteData(data))
+    },
+    fetchInitialData: (user = '') => {
+      dispatch(fetchInitialData(user))
+    },
+  }
+}
 
 
 const store = createStore(
@@ -148,12 +142,22 @@ let RootStack =   createSwitchNavigator(
 
 let AppContainer = createAppContainer(RootStack);
 
+const AppRoot = (props) => (
+  <AppContainer screenProps={props} />
+);
+
+const AppHolderContainer = connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(AppRoot)
+
+
 
 export default function  App (props){
 
     return (
         <Provider store={store}>
-          <AppContainer/>
+          <AppHolderContainer/>
         </Provider>
     )
 
