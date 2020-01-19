@@ -6,7 +6,7 @@
  * @flow
  */
 
- 
+import React from 'react';
 import {
   SafeAreaView,
   StyleSheet,
@@ -53,31 +53,31 @@ const epicMiddleware = createEpicMiddleware();
 
 
 
-const mapStateToProps = state => {
-  return {
-    remoteData: state.remoteData
-  }
-}
+// const mapStateToProps = state => {
+//   return {
+//     remoteData: state.remoteData
+//   }
+// }
 
-const mapDispatchToProps = dispatch => {
-  return {
-    fetchRemoteData: (range = '') => {
-      dispatch(fetchRemoteData(range))
-    },
-    setRemoteData: data => {
-      dispatch(setRemoteData(data))
-    },
-    fetchInitialData: (user = '') => {
-      dispatch(fetchInitialData(user))
-    },
-  }
-}
+// const mapDispatchToProps = dispatch => {
+//   return {
+//     fetchRemoteData: (range = '') => {
+//       dispatch(fetchRemoteData(range))
+//     },
+//     setRemoteData: data => {
+//       dispatch(setRemoteData(data))
+//     },
+//     fetchInitialData: (user = '') => {
+//       dispatch(fetchInitialData(user))
+//     },
+//   }
+// }
 
 
-const AppHolderContainer = connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(AppHolder)
+// const AppHolderContainer = connect(
+//   mapStateToProps,
+//   mapDispatchToProps
+// )(AppHolder)
 
 
 const store = createStore(
@@ -135,17 +135,26 @@ const AppStack = createStackNavigator({
   Profile: {screen: ProfileScreen},
 });
 
-
-
-export default createAppContainer(
-  createSwitchNavigator(
-    {
-      AuthLoading: AuthLoadingScreen,
-      App: AppStack,
-      Auth: AuthStack,
-    },
-    {
-      initialRouteName: 'AuthLoading',
-    }
-  )
+let RootStack =   createSwitchNavigator(
+  {
+    AuthLoading: AuthLoadingScreen,
+    App: AppStack,
+    Auth: AuthStack,
+  },
+  {
+    initialRouteName: 'AuthLoading',
+  }
 );
+
+let AppContainer = createAppContainer(RootStack);
+
+
+export default function  App (props){
+
+    return (
+        <Provider store={store}>
+          <AppContainer/>
+        </Provider>
+    )
+
+}
