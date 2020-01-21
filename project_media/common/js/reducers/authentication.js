@@ -21,6 +21,8 @@ const authentication = (state = initialState, action) => {
       };
     case userConstants.LOGIN_FAILURE:
       return {
+        loggingIn: false,
+        loggedIn: false,
         loginFailureReason: action.payload,
         loginFailureError: action.error
       };

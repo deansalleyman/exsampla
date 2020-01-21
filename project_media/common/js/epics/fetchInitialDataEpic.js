@@ -5,6 +5,7 @@ import { ajax } from 'rxjs/ajax';
 import {fetchInitialData, setInitialData, userActions, researchActions} from '../actions/';
 import { normalize, schema } from 'normalizr';
 import _ from 'lodash';
+import isEmpty  from 'lodash/isEmpty';
 import { userConstants, dataConstants } from '../constants';
 import md5 from 'md5';
 
@@ -234,12 +235,24 @@ const fetchInitialDataEpic = action$ => action$.pipe(
               const {entities: intialdataObj={}} = normalizedData;
               const {result:{cookie=''}} = normalizedData;
               const {user} = loginOptions;
-              console.log(intialdataObj, cookie);
+             
              // change to logged in user action
-            //  TODO setup new sessionID
-            
-               return of(setInitialData(intialdataObj), 
-               userActions.success(user, cookie));
+
+            if(cookie && !isEmpty(intialdataObj)){
+              console.log('thinks intial login with cookie', intialdataObj, cookie);
+              return of(setInitialData(intialdataObj), 
+              userActions.success(user, cookie));
+
+            } else if(!cookie && !isEmpty(intialdataObj)){
+              console.log('thinks has data', intialdataObj, cookie);
+              return of(setInitialData(intialdataObj),
+              userActions.failure(true,'Login Failed'));
+            }else {
+              console.log('thinks has no data and login incorrect', intialdataObj);
+              return of(userActions.failure(true,'Login Failed'));
+            }
+
+
 
             } else {
 

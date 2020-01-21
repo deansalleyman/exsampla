@@ -29,8 +29,9 @@ import {createStackNavigator} from 'react-navigation-stack';
 
 import HomeScreen from './project_media/common/js/components/HomeScreen'
 import ProfileScreen from './project_media/common/js/components/ProfileScreen';
-import AuthLoadingScreen from './project_media/common/js/components/AuthLoadingScreen'
-import SignInScreen from './project_media/common/js/components/SignInScreen';
+import AuthLoadingScreen from './project_media/common/js/components/AuthLoadingScreen';
+// import SignInScreen from './project_media/common/js/components/SignInScreen';
+import LoginPageContainer from './project_media/common/js/containers/LoginPageContainer';
 
 import { Provider } from 'react-redux'
 import { createStore, applyMiddleware } from 'redux'
@@ -80,7 +81,7 @@ const store = createStore(
 
   epicMiddleware.run(rootEpic);
 
-const AuthStack = createStackNavigator({ SignIn: SignInScreen });
+const AuthStack = createStackNavigator({ SignIn: LoginPageContainer });
 
 
 
@@ -155,10 +156,23 @@ const AppHolderContainer = connect(
 
 export default function  App (props){
 
-    return (
-        <Provider store={store}>
-          <AppHolderContainer/>
-        </Provider>
-    )
+  store.subscribe(() => console.log('getState',store.getState()));
+
+  // // Every time the state changes, log it
+  // // Note that subscribe() returns a function for unregistering the listener
+  const unsubscribe = store.subscribe(throttle(() => {
+    console.log('getState',store.getState());
+    saveState({
+      authentication: store.getState().authentication,
+      initialData: store.getState().initialData,
+      research: store.getState().research
+    });
+  }, 1000));
+
+  return (
+      <Provider store={store}>
+        <AppHolderContainer/>
+      </Provider>
+  )
 
 }

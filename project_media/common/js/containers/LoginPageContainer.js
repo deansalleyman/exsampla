@@ -1,20 +1,14 @@
 import { connect } from 'react-redux'
 import { userActions } from '../actions'
-import LoginPage from '../components/LoginPage';
+import SignInScreen from '../components/SignInScreen';
 import { userConstants } from '../constants';
 
 
-
-// const mapStateToProps = state => {
-//   return {
-//     remoteData: state.remoteData
-//   }
-// }
-
 function mapStateToProps(state) {
-    const { loggingIn = false } = state.authentication;
+    const { loggingIn = false, loggedIn = false } = state.authentication;
     return {
-        loggingIn
+        loggingIn,
+        loggedIn
     };
 }
 
@@ -29,6 +23,6 @@ const mapDispatchToProps = dispatch => {
 const LoginPageContainer = connect(
   mapStateToProps,
   mapDispatchToProps
-)(LoginPage)
+)(SignInScreen)
 
 export default LoginPageContainer;

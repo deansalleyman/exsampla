@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   ActivityIndicator,
   Button,
@@ -10,8 +10,16 @@ import {
 import AsyncStorage from '@react-native-community/async-storage';
 import { useNavigation, useNavigationParam } from 'react-navigation-hooks';
 
+
 export default function SignInScreen(props) {
     const { navigate } = useNavigation();
+    const { onLoginUser, loggingIn, loggedIn } = props;
+
+    useEffect(() => {
+      console.log('SignInScreen useEffect', loggingIn, loggedIn)
+    }, [loggingIn]); // Only re-run the effect if count changes
+
+    console.log('SignInScreen', props)
 
     // Declare a new state variable, which we'll call "username"
   const [credentials, setCredentials] = useState({
@@ -40,18 +48,46 @@ export default function SignInScreen(props) {
           ...cred
       });
         console.log('cred updated', credentials);
+
+      const { username, password } = credentials;
+
+      if (username && password) {
+          onLoginUser(username, password);
+      }
+
       };
 
       const _signInAsync = async () => {
 
-        try {
-            console.log('_signInAsync', credentials);
-            await AsyncStorage.setItem('userToken', 'abc');
-           // navigate('App');
+        const { username, password } = credentials;
+
+         try {
+            console.log('_signInAsync', username, password);
+
+            if (username && password) {
+              await onLoginUser(username, password);
+
+              navigate('App');
+          }
+
+            // await AsyncStorage.setItem('userToken', 'abc');
+
+
           } catch (error) {
             console.log('error', error);
             // Error saving data
           }
+
+  
+
+        // try {
+        //     console.log('_signInAsync', credentials);
+        //     await AsyncStorage.setItem('userToken', 'abc');
+        //    // navigate('App');
+        //   } catch (error) {
+        //     console.log('error', error);
+        //     // Error saving data
+        //   }
 
      
     };
