@@ -9,6 +9,7 @@ import {
 } from 'react-native';
 import AsyncStorage from '@react-native-community/async-storage';
 import { useNavigation, useNavigationParam } from 'react-navigation-hooks';
+import PropTypes from 'prop-types';
 
 
 export default function SignInScreen(props) {
@@ -16,7 +17,10 @@ export default function SignInScreen(props) {
     const { onLoginUser, loggingIn, loggedIn } = props;
 
     useEffect(() => {
-      console.log('SignInScreen useEffect', loggingIn, loggedIn)
+      console.log('SignInScreen useEffect', loggingIn, loggedIn);
+      if(loggedIn){
+        navigate('App');
+      }
     }, [loggingIn]); // Only re-run the effect if count changes
 
     console.log('SignInScreen', props)
@@ -42,18 +46,11 @@ export default function SignInScreen(props) {
     
       const updateField = cred => {
 
-
         setCredentials({
           ...credentials,
           ...cred
       });
-        console.log('cred updated', credentials);
 
-      const { username, password } = credentials;
-
-      if (username && password) {
-          onLoginUser(username, password);
-      }
 
       };
 
@@ -65,13 +62,8 @@ export default function SignInScreen(props) {
             console.log('_signInAsync', username, password);
 
             if (username && password) {
-              await onLoginUser(username, password);
-
-              navigate('App');
-          }
-
-            // await AsyncStorage.setItem('userToken', 'abc');
-
+              onLoginUser(username, password);
+            }
 
           } catch (error) {
             console.log('error', error);
@@ -79,15 +71,6 @@ export default function SignInScreen(props) {
           }
 
   
-
-        // try {
-        //     console.log('_signInAsync', credentials);
-        //     await AsyncStorage.setItem('userToken', 'abc');
-        //    // navigate('App');
-        //   } catch (error) {
-        //     console.log('error', error);
-        //     // Error saving data
-        //   }
 
      
     };

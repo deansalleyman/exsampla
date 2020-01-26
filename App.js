@@ -32,6 +32,7 @@ import ProfileScreen from './project_media/common/js/components/ProfileScreen';
 import AuthLoadingScreen from './project_media/common/js/components/AuthLoadingScreen';
 // import SignInScreen from './project_media/common/js/components/SignInScreen';
 import LoginPageContainer from './project_media/common/js/containers/LoginPageContainer';
+import PageResearchContainer from './project_media/common/js/containers/PageResearchContainer';
 
 import { Provider } from 'react-redux'
 import { createStore, applyMiddleware } from 'redux'
@@ -55,8 +56,14 @@ const epicMiddleware = createEpicMiddleware();
 
 
 const mapStateToProps = state => {
+
+  const { loggingIn = false, loggedIn = false } = state.authentication;
+  const {remoteData} = state;
+
   return {
-    remoteData: state.remoteData
+    loggingIn,
+    loggedIn,
+    remoteData
   }
 }
 
@@ -126,8 +133,7 @@ const styles = StyleSheet.create({
 
 
 const AppStack = createStackNavigator({
-  Home: {screen: HomeScreen},
-  Profile: {screen: ProfileScreen},
+  Home: {screen: PageResearchContainer}
 });
 
 let RootStack =   createSwitchNavigator(

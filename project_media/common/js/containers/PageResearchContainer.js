@@ -1,7 +1,7 @@
 
 import { connect } from 'react-redux'
 import { userActions, appActions, researchActions } from '../actions'
-import PageResearch from '../components/PageResearch';
+import ResearchScreen from '../components/ResearchScreen';
 
 import { userConstants, dataConstants, researchConstants  } from '../constants';
 
@@ -55,7 +55,7 @@ const mapDispatchToProps = dispatch => {
 const PageResearchContainer = connect(
   mapStateToProps,
   mapDispatchToProps
-)(PageResearch)
+)(ResearchScreen)
 
 export default PageResearchContainer;
 

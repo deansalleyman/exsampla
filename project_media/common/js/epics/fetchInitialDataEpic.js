@@ -244,9 +244,10 @@ const fetchInitialDataEpic = action$ => action$.pipe(
               userActions.success(user, cookie));
 
             } else if(!cookie && !isEmpty(intialdataObj)){
-              console.log('thinks has data', intialdataObj, cookie);
+              console.log('thinks has data', response);
               return of(setInitialData(intialdataObj),
-              userActions.failure(true,'Login Failed'));
+              userActions.success(user, 'NotSet'));
+              //userActions.failure(true,'Login Failed'));
             }else {
               console.log('thinks has no data and login incorrect', intialdataObj);
               return of(userActions.failure(true,'Login Failed'));

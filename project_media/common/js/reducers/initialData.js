@@ -20,7 +20,7 @@ const initialData =  (state = initialState, action) => {
         isFetching: true
       })
     case dataConstants.SET_INITIAL_DATA:
-   console.log(action.type);
+   console.log('SET_INITIAL_DATA',action.type);
       return Object.assign({}, state, {
         isFetching: false,
         data: action.payload || {},
