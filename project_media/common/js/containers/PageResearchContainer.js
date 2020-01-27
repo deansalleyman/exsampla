@@ -13,8 +13,8 @@ function getPageById(state, id){
   return pagedata;
 
 }
-function mapStateToProps(state, ownProps) {
-  const {id} = ownProps;
+function mapStateToProps(state) {
+
   const {initialData:{ data: {pageElements = {}, scripts} }}= state;
 
   const { loginFailureReason } = state.authentication;
@@ -23,10 +23,9 @@ function mapStateToProps(state, ownProps) {
 
   //TODO only return data here for the specified page
   const pageData = getPageById(state, currentResearchPage);
-  console.log('pageresearch container should get update on navigate - mapStateToProps', pageData, id, currentResearchPage )
+  console.log('pageresearch container should get update on navigate - mapStateToProps', pageData, currentResearchPage )
     return {
       currentResearchPage,
-      id,
       pageData,
       pagesArray: Object.keys(pageElements),
       scripts

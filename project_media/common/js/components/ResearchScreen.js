@@ -24,7 +24,7 @@ export default function ResearchScreen(props){
   const name = useNavigationParam('name');
   const { routeName } = useNavigationState();
 
-  const { pageData, id ,scripts, navigateNext, pagesArray, addAnswer, scriptCommand} = props;
+  const { pageData ,scripts, navigateNext, pagesArray, addAnswer, scriptCommand} = props;
 
   const [answer, setAnswer] = useState();
 
@@ -102,9 +102,32 @@ handleScript = (value='', e)  => {
       <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
       <Text>Research Screen {routeName} for {name}</Text>
 
-      {pageData && pageData.title &&
+        {pageData && pageData.title &&
           <ResearchTitle dataObject={pageData.title} />
         }
+
+
+{pageData && pageData.v_slider &&
+          <ResearchAnswerSlider dataObject={pageData.v_slider} handleAnswer={this.handleAnswer} />
+        }
+
+        {pageData && pageData.text &&
+          <ResearchAnswerText dataObject={pageData.text} />
+        }
+
+
+        {pageData && pageData.button_bar && pageData.button_bar.button_bar && 
+          <ResearchButtonBar dataObject={pageData.button_bar.button_bar} handleScript={this.handleScript}/>
+        }
+
+        {pageData && pageData.button &&
+          <ResearchButton dataObject={pageData.button} handleScript={this.handleScript}/>
+        }
+
+        {pageData && pageData.link &&
+          <ResearchLink dataObject={pageData.link} />
+        }
+
 
       </View>
     );
