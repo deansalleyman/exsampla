@@ -28,6 +28,11 @@ export default function ResearchScreen(props){
 
   const [answer, setAnswer] = useState();
 
+  useEffect(() => {
+    console.log('ResearchScreen useEffect', pageData, props);
+
+  },[pageData]);
+
 handleScript = (value='', e)  => {
   e.preventDefault();
   const params = value.split(/[?]+/);
