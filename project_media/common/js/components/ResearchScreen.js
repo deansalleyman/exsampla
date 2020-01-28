@@ -45,7 +45,7 @@ handleScript = (value='', e)  => {
 
   const gotoStandard = parseInt(value, 10);
 
-  console.log('handleScript top:',value, params, parsed, selected)
+  // console.log('handleScript top:',value, params, parsed, selected)
 
 
   if(!isEmpty(selected)){
@@ -77,11 +77,11 @@ handleScript = (value='', e)  => {
 
 
 
-    console.log('mergeWith item', item, parsed, theTarget,lookUpkey, lookUpkeyVar);
+    // console.log('mergeWith item', item, parsed, theTarget,lookUpkey, lookUpkeyVar);
     return ({[theKey]:theTarget});
   });
 
-    console.log('handleScript',parsed, selected);
+    // console.log('handleScript',parsed, selected);
       scriptCommand({id:selected.id, script: selectedEnriched});
     } else if(isNumber(gotoStandard)){
 

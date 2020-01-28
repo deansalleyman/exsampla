@@ -51,7 +51,7 @@ const mapDispatchToProps = dispatch => {
         dispatch(researchActions.completeResearch(payload))
       },
       scriptCommand: (payload)=>{
-        console.log('scriptCommand',payload)
+        // console.log('scriptCommand',payload)
         dispatch(researchActions.scriptCommand(payload))
       }
     }

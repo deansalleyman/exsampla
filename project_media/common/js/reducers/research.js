@@ -5,6 +5,7 @@ import _ from 'lodash';
 import { loadState } from '../localStorage';
 import remove from 'lodash/remove';
 
+
 const answerSetAdd = (state,action)=>{
   let returnVal = {};
 
@@ -47,13 +48,17 @@ const research = (state = initialState, action) => {
         );
       case researchConstants.SET_SESSION:
         const {sessions = []} = state;
-        console.log('SET_SESSION')
+        console.log('SET_SESSION');
+        const newAnswerSet = {};
+        newAnswerSet[action.id] = {};
+        const newSessions = [...sessions, action.id];
+
           return Object.assign({},
-            ...state,
+            state,
             {
-              sessions:[...sessions, action.id],
+              sessions: newSessions,
               currentSession: action.id,
-              answerSet:{[action.id]:{}}
+              answerSet: newAnswerSet
             }
           )
       case researchConstants.SCRIPT_COMMAND:
