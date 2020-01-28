@@ -10,8 +10,7 @@ export default function ResearchTitle({ dataObject =[]}) {
         dataObject.map((item, i) =>{
         return (
         <Text key={i.toString()}>{item.title}</Text>
-        // <p key={i.toString()}
-        // dangerouslySetInnerHTML={{__html:item.title}} />
+
         )
        
       })
@@ -19,7 +18,7 @@ export default function ResearchTitle({ dataObject =[]}) {
     } else {
       return (
         <Text>{dataObject.title}</Text>
-        // <p dangerouslySetInnerHTML={{__html:dataObject.title}}/>
+
       )
     }
 }

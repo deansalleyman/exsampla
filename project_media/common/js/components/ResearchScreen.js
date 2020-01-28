@@ -18,6 +18,7 @@ import ResearchButton from './ResearchButton';
 import ResearchButtonBar from './ResearchButtonBar';
 import ResearchLink from './ResearchLink';
 import PropTypes from 'prop-types';
+import ResearchLogo from './ResearchLogo';
 
 export default function ResearchScreen(props){
   const { navigate } = useNavigation();
@@ -100,14 +101,17 @@ handleScript = (value='', e)  => {
 
   return (
       <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-      <Text>Research Screen {routeName} for {name}</Text>
+        {pageData && pageData.logo &&
+          <ResearchLogo dataObject={pageData.logo} />
+        }
 
         {pageData && pageData.title &&
           <ResearchTitle dataObject={pageData.title} />
         }
 
 
-{pageData && pageData.v_slider &&
+
+        {pageData && pageData.v_slider &&
           <ResearchAnswerSlider dataObject={pageData.v_slider} handleAnswer={this.handleAnswer} />
         }
 
