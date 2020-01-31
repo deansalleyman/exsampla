@@ -6,6 +6,10 @@
  * @flow
  */
 
+import settings from './config/settings';
+
+console.log('settings', settings);
+
 import React from 'react';
 import {
   SafeAreaView,
