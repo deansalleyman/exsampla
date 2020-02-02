@@ -10,7 +10,7 @@ import rootReducer from './reducers';
 
 import { connect } from 'react-redux';
 
-import { setRemoteData , fetchRemoteData, fetchInitialData} from './actions';
+import {fetchInitialData} from './actions';
 
 import rootEpic from './epics';
 
@@ -26,19 +26,12 @@ const epicMiddleware = createEpicMiddleware();
 
 
 const mapStateToProps = state => {
-  return {
-    remoteData: state.remoteData
-  }
+  
+  return {}
 }
 
 const mapDispatchToProps = dispatch => {
   return {
-    fetchRemoteData: (range = '') => {
-      dispatch(fetchRemoteData(range))
-    },
-    setRemoteData: data => {
-      dispatch(setRemoteData(data))
-    },
     fetchInitialData: (user = '') => {
       dispatch(fetchInitialData(user))
     },
@@ -57,15 +50,6 @@ const store = createStore(
   applyMiddleware(epicMiddleware));
 
   epicMiddleware.run(rootEpic);
-
-// import {
-//   addTodo,
-//   toggleTodo,
-//   setVisibilityFilter,
-//   VisibilityFilters
-// } from './actions';
-
-
 
 
 
@@ -88,16 +72,6 @@ const unsubscribe = store.subscribe(throttle(() => {
   });
 }, 1000));
 
-// // Dispatch some actions
-// store.dispatch(addTodo('Learn about actions'))
-// store.dispatch(addTodo('Learn about reducers'))
-// store.dispatch(addTodo('Learn about store'))
-// store.dispatch(toggleTodo(0))
-// store.dispatch(toggleTodo(1))
-// store.dispatch(setVisibilityFilter(VisibilityFilters.SHOW_COMPLETED))
-
-// Stop listening to state updates
-// unsubscribe()
 
   var element = document.getElementById("root");
 

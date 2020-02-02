@@ -7,6 +7,7 @@ import { researchConstants} from '../constants';
 import keys from 'lodash/keys';
 import md5 from 'md5';
 import isUndefined from 'lodash/isUndefined';
+import settings from '../../../../config/settings';
 
 const scriptCommandEpic = action$ => action$.pipe(
   tap(item => console.log('tap passed action', item)),

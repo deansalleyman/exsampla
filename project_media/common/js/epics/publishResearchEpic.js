@@ -2,11 +2,12 @@ import { filter, mapTo, mergeMap, tap, switchMap,catchError, map } from 'rxjs/op
 import { ofType } from 'redux-observable';
 import { of , from} from 'rxjs'
 import { ajax } from 'rxjs/ajax';
-import {fetchRemoteData, setRemoteData, userActions, appActions, researchActions} from '../actions/';
+import {userActions, appActions, researchActions} from '../actions/';
 import { researchConstants} from '../constants';
 import keys from 'lodash/keys';
 import md5 from 'md5';
 import isUndefined from 'lodash/isUndefined';
+import settings from '../../../../config/settings';
 
 // loop through the outstanding sessions, each time the result returns back which will in turn delete the item 
 
@@ -34,7 +35,7 @@ const publishResearchEpic = ( action$ , state$ ) => action$.pipe(
 
 
       const postOptions = {
-          url: 'https://leanos.app/RT/put.php',
+          url: settings.api + 'put.php',
           method: 'POST',
           responseType: 'text',
           headers: {

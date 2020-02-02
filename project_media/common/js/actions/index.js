@@ -23,16 +23,7 @@ export const VisibilityFilters = {
   SHOW_ACTIVE: 'SHOW_ACTIVE'
 }
 
-export const fetchRemoteData = range => ({
-  type: 'FETCH_REMOTE_DATA',
-  range
-})
 
-export const setRemoteData = data => ({
-  type: dataConstants.SET_REMOTE_DATA,
-  data,
-  receivedAt: Date.now()
-})
 
 export const fetchInitialData = user => ({
   type: dataConstants.FETCH_INITIAL_DATA,
@@ -116,6 +107,7 @@ const submit = () => ({
 
 
 export const researchActions = {
+  fetchInitialData,
   addAnswer,
   completeResearch,
   postResearch,

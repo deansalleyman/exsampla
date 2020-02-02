@@ -5,6 +5,7 @@ import { loadState } from '../localStorage';
 
 const {initialData:initialState = {
   isFetching: false,
+  dataLoaded: false,
   data: {}
 }} = loadState() || {};
 
@@ -23,6 +24,7 @@ const initialData =  (state = initialState, action) => {
    console.log('SET_INITIAL_DATA',action.type);
       return Object.assign({}, state, {
         isFetching: false,
+        dataLoaded: true,
         data: action.payload || {},
         lastUpdated: action.receivedAt
       })

@@ -45,7 +45,7 @@ import rootReducer from './project_media/common/js/reducers';
 
 import { connect } from 'react-redux';
 
-import { setRemoteData , fetchRemoteData, fetchInitialData} from './project_media/common/js/actions';
+import { fetchInitialData} from './project_media/common/js/actions';
 
 import rootEpic from './project_media/common/js/epics';
 
@@ -63,23 +63,19 @@ const epicMiddleware = createEpicMiddleware();
 const mapStateToProps = state => {
 
   const { loggingIn = false, loggedIn = false } = state.authentication;
-  const {remoteData} = state;
+
+  const {isFetching, dataLoaded} = state.initialData;
 
   return {
     loggingIn,
     loggedIn,
-    remoteData
+    isFetching,
+    dataLoaded
   }
 }
 
 const mapDispatchToProps = dispatch => {
   return {
-    fetchRemoteData: (range = '') => {
-      dispatch(fetchRemoteData(range))
-    },
-    setRemoteData: data => {
-      dispatch(setRemoteData(data))
-    },
     fetchInitialData: (user = '') => {
       dispatch(fetchInitialData(user))
     },

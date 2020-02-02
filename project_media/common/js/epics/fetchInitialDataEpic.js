@@ -8,6 +8,7 @@ import _ from 'lodash';
 import isEmpty  from 'lodash/isEmpty';
 import { userConstants, dataConstants } from '../constants';
 import md5 from 'md5';
+import settings from '../../../../config/settings';
 
 
 const elementSchema= new schema.Entity('elementObject',undefined,{
@@ -194,11 +195,11 @@ const returnedData = {
 
 const fetchInitialDataEpic = action$ => action$.pipe(
 
-    filter(action => action.type === userConstants.LOGIN_REQUEST),
+    filter(action => action.type === userConstants.LOGIN_REQUEST || action.type === dataConstants.FETCH_INITIAL_DATA),
    // tap(item => console.log('tap passed', item)),
    map(action => {
 
-    console.log('map action', action, 44643154);
+    console.log('map fetchInitialDataEpic action', action, 44643154);
     const {user, password:passwordText, cookie} = action;
     const password = (passwordText)?  md5(passwordText) : undefined;
     return ({
@@ -214,7 +215,7 @@ const fetchInitialDataEpic = action$ => action$.pipe(
 
 
       const postOptions = {
-          url: 'https://leanos.app/RT/login.php',//https://leanos.app/RT/login.php //https://d00be79a-2b50-4251-a118-c5f7b8f63ea4.mock.pstmn.io/login.php
+          url: settings.api + 'login.php',
           method: 'POST',
           responseType: 'json',
           headers: {
@@ -246,8 +247,7 @@ const fetchInitialDataEpic = action$ => action$.pipe(
             } else if(!cookie && !isEmpty(intialdataObj)){
               console.log('thinks has data', response);
               return of(setInitialData(intialdataObj),
-              userActions.success(user, 'NotSet'));
-              //userActions.failure(true,'Login Failed'));
+              userActions.failure(true,'Login Failed'));
             }else {
               console.log('thinks has no data and login incorrect', intialdataObj);
               return of(userActions.failure(true,'Login Failed'));
