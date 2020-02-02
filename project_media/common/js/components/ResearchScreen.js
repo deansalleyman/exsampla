@@ -1,8 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { View, Text, Button } from 'react-native';
 import { createAppContainer } from 'react-navigation';
 import { createStackNavigator } from 'react-navigation-stack';
 import { useNavigation, useNavigationParam, useNavigationState } from 'react-navigation-hooks';
+import ConfigContext from '../contexts/configContext';
 
 import keys from 'lodash/keys';
 import get from 'lodash/get';
@@ -21,6 +22,8 @@ import PropTypes from 'prop-types';
 import ResearchLogo from './ResearchLogo';
 
 export default function ResearchScreen(props){
+  const settings = useContext(ConfigContext);
+
   const { navigate } = useNavigation();
   const name = useNavigationParam('name');
   const { routeName } = useNavigationState();
@@ -102,7 +105,7 @@ handleScript = (value='', e)  => {
   return (
       <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
         {pageData && pageData.logo &&
-          <ResearchLogo dataObject={pageData.logo} />
+          <ResearchLogo dataObject={pageData.logo} settings={settings} />
         }
 
         {pageData && pageData.title &&

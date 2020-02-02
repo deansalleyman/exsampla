@@ -37,6 +37,7 @@ import AuthLoadingScreen from './project_media/common/js/components/AuthLoadingS
 // import SignInScreen from './project_media/common/js/components/SignInScreen';
 import LoginPageContainer from './project_media/common/js/containers/LoginPageContainer';
 import PageResearchContainer from './project_media/common/js/containers/PageResearchContainer';
+import {ConfigProvider, ConfigConsumer} from './project_media/common/js/contexts/configContext';
 
 import { Provider } from 'react-redux'
 import { createStore, applyMiddleware } from 'redux'
@@ -181,7 +182,9 @@ export default function  App (props){
 
   return (
       <Provider store={store}>
-        <AppHolderContainer/>
+        <ConfigProvider value={settings} >
+          <AppHolderContainer/>
+        </ConfigProvider>
       </Provider>
   )
 

@@ -1,6 +1,6 @@
 const settings = {
     auth:false,
-    assetsUrl:'http://images.com'
+    imageAssetsUrl:'https://leanos.app/RT/images/'
 }
 
 export default settings;

@@ -2,8 +2,8 @@
 import { connect } from 'react-redux'
 import { userActions, appActions, researchActions } from '../actions'
 import ResearchScreen from '../components/ResearchScreen';
-
 import { userConstants, dataConstants, researchConstants  } from '../constants';
+
 
 
 function getPageById(state, id){
@@ -15,6 +15,8 @@ function getPageById(state, id){
 }
 function mapStateToProps(state) {
 
+
+
   const {initialData:{ data: {pageElements = {}, scripts} }}= state;
 
   const { loginFailureReason } = state.authentication;
@@ -23,7 +25,7 @@ function mapStateToProps(state) {
 
   //TODO only return data here for the specified page
   const pageData = getPageById(state, currentResearchPage);
-  console.log('pageresearch container should get update on navigate - mapStateToProps', pageData, currentResearchPage )
+  console.log('pageresearch container should get update on navigate - mapStateToProps')
     return {
       currentResearchPage,
       pageData,
