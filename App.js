@@ -40,7 +40,9 @@ import PageResearchContainer from './project_media/common/js/containers/PageRese
 import {ConfigProvider, ConfigConsumer} from './project_media/common/js/contexts/configContext';
 
 import { Provider } from 'react-redux'
-import { createStore, applyMiddleware } from 'redux'
+import { createStore, applyMiddleware } from 'redux';
+import { ThemeProvider } from 'react-native-elements';
+
 import rootReducer from './project_media/common/js/reducers';
 
 import { connect } from 'react-redux';
@@ -163,6 +165,12 @@ const AppHolderContainer = connect(
 
 export default function  App (props){
 
+  const theme = {
+    Button: {
+      raised: true,
+    },
+  };
+
   store.subscribe(() => console.log('getState',store.getState()));
 
   // // Every time the state changes, log it
@@ -179,7 +187,9 @@ export default function  App (props){
   return (
       <Provider store={store}>
         <ConfigProvider value={settings} >
+        <ThemeProvider theme={theme}>
           <AppHolderContainer/>
+          </ThemeProvider>
         </ConfigProvider>
       </Provider>
   )

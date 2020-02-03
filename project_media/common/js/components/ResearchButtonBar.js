@@ -1,6 +1,7 @@
 
 import React, { useState, useEffect } from 'react';
-import { View, Text, Button } from 'react-native';
+import { View, Text } from 'react-native';
+import { Button } from 'react-native-elements';
 import PropTypes from 'prop-types';
 export default function ResearchButtonBar({ dataObject =[], handleScript}) {
     console.log('ResearchButton bar text', dataObject);

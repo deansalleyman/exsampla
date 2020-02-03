@@ -8,16 +8,18 @@ export default function ResearchTitle({ dataObject =[]}) {
     if(Array.isArray(dataObject)){
       return (
         dataObject.map((item, i) =>{
-        return (
+        return (<View style={{ flex: 1, alignItems: 'stretch', justifyContent: 'center' }}>
         <Text key={i.toString()}>{item.title}</Text>
+        </View>
 
         )
        
       })
       )
     } else {
-      return (
+      return (<View style={{ flex: 1, alignItems: 'stretch', justifyContent: 'center' }}>
         <Text>{dataObject.title}</Text>
+        </View>
 
       )
     }

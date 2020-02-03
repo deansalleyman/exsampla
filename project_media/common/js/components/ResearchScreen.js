@@ -96,7 +96,7 @@ handleScript = (value='', e)  => {
 
 
   handleAnswer = (answer,e) => {
-    e.preventDefault();
+    //e.preventDefault();
     setAnswer({ answer });
     console.log('handleAnswer', answer)
   }
@@ -115,7 +115,7 @@ handleScript = (value='', e)  => {
 
 
         {pageData && pageData.v_slider &&
-          <ResearchAnswerSlider dataObject={pageData.v_slider} handleAnswer={this.handleAnswer} />
+          <ResearchAnswerSlider dataObject={pageData.v_slider} handleAnswer={handleAnswer} />
         }
 
         {pageData && pageData.text &&
