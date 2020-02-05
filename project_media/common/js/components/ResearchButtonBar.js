@@ -8,14 +8,14 @@ export default function ResearchButtonBar({ dataObject =[], handleScript}) {
     const {button, buttons} = dataObject;
     if(Array.isArray(buttons)){
       return (
-        buttons.map((item, i) =>{
+        buttons.map((item, i) => {
           const {title='Button', goto, script} = item;
-          console.log('ResearchButton sub', title, goto, script);  
-        return (<Button key={i.toString()} onPress={e => handleScript((goto || script),e)} title={title} />
-        )
+
+        return (<Button key={i.toString()} onPress={e => handleScript((goto || script),e)} title={title} />)
        
       })
-      )
+
+     )
     } else if(button){
       console.log('ResearchButton bar not array', button);
       const {title='Button', goto, script } = button;

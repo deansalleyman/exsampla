@@ -11,14 +11,14 @@ export default function ResearchAnswerSlider({ dataObject, handleAnswer}) {
   const {default:defaultValue, labels,max ,min ,steps ,type ,var:variable } = dataObject.v_slider;
 console.log('ResearchAnswerSlider', dataObject , handleAnswer, labels, defaultValue)
   const [answer, setAnswer] = useState(toNumber(defaultValue));
-  return (<View style={{ flex: 1, alignItems: 'stretch', justifyContent: 'center' }}>
+  return (<View style={{ flex: 1, justifyContent: 'center', wdith:'100%' }}>
   <Slider
     value={toNumber(answer)}
     minimumValue={toNumber(min)}
     step={toNumber(steps)}
     maximumValue={toNumber(max)}
-
-    onValueChange={value => setAnswer({ value })}
+    orientation='vertical'
+    onValueChange={value => setAnswer(value)}
     onSlidingComplete={value => handleAnswer({value})}
   />
   <Text>Value: </Text>

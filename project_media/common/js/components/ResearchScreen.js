@@ -103,7 +103,7 @@ handleScript = (value='', e)  => {
 
 
   return (
-      <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+      <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center', width:'100%' }}>
         {pageData && pageData.logo &&
           <ResearchLogo dataObject={pageData.logo} settings={settings} />
         }

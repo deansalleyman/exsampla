@@ -169,6 +169,9 @@ export default function  App (props){
     Button: {
       raised: true,
     },
+    Slider: {
+      width:'100%'
+    }
   };
 
   store.subscribe(() => console.log('getState',store.getState()));
