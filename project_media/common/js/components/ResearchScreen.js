@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react';
+
 import { View, Text, Button } from 'react-native';
 import { createAppContainer } from 'react-navigation';
 import { createStackNavigator } from 'react-navigation-stack';
@@ -6,7 +7,7 @@ import { useNavigation, useNavigationParam, useNavigationState } from 'react-nav
 import ConfigContext from '../contexts/configContext';
 
 import keys from 'lodash/keys';
-import get from 'lodash/get';
+import get from 'lodash/get'; 
 import isUndefined from 'lodash/isUndefined';
 import isNumber from 'lodash/isNumber';
 import isEmpty from 'lodash/isEmpty'
@@ -23,12 +24,16 @@ import ResearchLogo from './ResearchLogo';
 
 export default function ResearchScreen(props){
   const settings = useContext(ConfigContext);
+  const { pageTitles = {} } = settings;
 
   const { navigate } = useNavigation();
   const name = useNavigationParam('name');
   const { routeName } = useNavigationState();
 
   const { pageData ,scripts, navigateNext, pagesArray, addAnswer, scriptCommand} = props;
+  const { currentResearchPage } = props.screenProps;
+
+  const PageTitle = (pageTitles[currentResearchPage])? pageTitles[currentResearchPage] : pageTitles['session'];
 
   const [answer, setAnswer] = useState();
 
@@ -104,6 +109,13 @@ handleScript = (value='', e)  => {
 
   return (
       <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center', width:'100%' }}>
+
+        {PageTitle &&
+          <Text>{PageTitle}</Text>
+        }
+        
+        
+
         {pageData && pageData.logo &&
           <ResearchLogo dataObject={pageData.logo} settings={settings} />
         }
@@ -123,10 +135,6 @@ handleScript = (value='', e)  => {
         }
 
 
-        {pageData && pageData.button_bar && pageData.button_bar.button_bar && 
-          <ResearchButtonBar dataObject={pageData.button_bar.button_bar} handleScript={this.handleScript}/>
-        }
-
         {pageData && pageData.button &&
           <ResearchButton dataObject={pageData.button} handleScript={this.handleScript}/>
         }
@@ -134,6 +142,14 @@ handleScript = (value='', e)  => {
         {pageData && pageData.link &&
           <ResearchLink dataObject={pageData.link} />
         }
+
+        <View style={{ alignSelf: 'flex-end' }}> 
+
+        {pageData && pageData.button_bar && pageData.button_bar.button_bar && 
+          <ResearchButtonBar dataObject={pageData.button_bar.button_bar} handleScript={this.handleScript}/>
+        }
+
+        </View>
 
 
       </View>
