@@ -24,6 +24,7 @@ import ResearchLogo from './ResearchLogo';
 
 export default function ResearchScreen(props){
   const settings = useContext(ConfigContext);
+
   const { pageTitles = {} } = settings;
 
   const { navigate } = useNavigation();
@@ -39,7 +40,7 @@ export default function ResearchScreen(props){
     const { currentResearchPage } = props;
     const PageTitle = (pageTitles[currentResearchPage])? pageTitles[currentResearchPage] : pageTitles['session'];
 
-    console.log('changeThisTitle', props, PageTitle )
+
     changeThisTitle(PageTitle)
 
   },[props.currentResearchPage]);
@@ -111,7 +112,7 @@ handleScript = (value='', e)  => {
 
 
   handleAnswer = (answer,e) => {
-    //e.preventDefault();
+
     setAnswer({ answer });
     console.log('handleAnswer', answer)
   }
@@ -119,11 +120,7 @@ handleScript = (value='', e)  => {
 
   return (
       <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center', width:'100%' }}>
-{/* 
-        {PageTitle &&
-          <Text>{PageTitle}</Text>
-        }
-         */}
+
         
 
         {pageData && pageData.logo &&
@@ -168,7 +165,16 @@ handleScript = (value='', e)  => {
   }
 
 
-  ResearchScreen.navigationOptions = ({ navigation }) => {
+  ResearchScreen.navigationOptions = ({ navigation, screenProps }) => {
+
     const { params } = navigation.state;
-    return params;
+
+    const {header} = screenProps.settings;
+
+    const returnProps = Object.assign({}, {
+      title: navigation.getParam('title', header.title)},
+      header.style
+      )
+
+    return returnProps;
 };

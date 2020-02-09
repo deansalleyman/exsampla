@@ -72,7 +72,8 @@ const mapStateToProps = state => {
     loggingIn,
     loggedIn,
     isFetching,
-    dataLoaded
+    dataLoaded,
+    settings
   }
 }
 
