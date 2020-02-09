@@ -136,7 +136,10 @@ const styles = StyleSheet.create({
 
 
 const AppStack = createStackNavigator({
-  Home: {screen: PageResearchContainer}
+  Home: {
+    name: 'Research',
+    screen: PageResearchContainer
+  }
 });
 
 let RootStack =   createSwitchNavigator(

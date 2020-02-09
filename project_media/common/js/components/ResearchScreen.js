@@ -31,16 +31,26 @@ export default function ResearchScreen(props){
   const { routeName } = useNavigationState();
 
   const { pageData ,scripts, navigateNext, pagesArray, addAnswer, scriptCommand} = props;
-  const { currentResearchPage } = props.screenProps;
+  
 
-  const PageTitle = (pageTitles[currentResearchPage])? pageTitles[currentResearchPage] : pageTitles['session'];
+
+
+  useEffect(() => {
+    const { currentResearchPage } = props;
+    const PageTitle = (pageTitles[currentResearchPage])? pageTitles[currentResearchPage] : pageTitles['session'];
+
+    console.log('changeThisTitle', props, PageTitle )
+    changeThisTitle(PageTitle)
+
+  },[props.currentResearchPage]);
 
   const [answer, setAnswer] = useState();
 
-  useEffect(() => {
-    console.log('ResearchScreen useEffect', pageData, props);
+  changeThisTitle = (titleText) => {
+    const {setParams} = props.navigation;
+     setParams({ title: titleText })
+    }
 
-  },[pageData]);
 
 handleScript = (value='', e)  => {
   e.preventDefault();
@@ -109,11 +119,11 @@ handleScript = (value='', e)  => {
 
   return (
       <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center', width:'100%' }}>
-
+{/* 
         {PageTitle &&
           <Text>{PageTitle}</Text>
         }
-        
+         */}
         
 
         {pageData && pageData.logo &&
@@ -158,6 +168,7 @@ handleScript = (value='', e)  => {
   }
 
 
-  ResearchScreen.navigationOptions = {
-    title: 'Research'
-  };
+  ResearchScreen.navigationOptions = ({ navigation }) => {
+    const { params } = navigation.state;
+    return params;
+};
