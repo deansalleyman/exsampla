@@ -19,7 +19,7 @@ const settings = {
           }}
     },
     htmlText:{
-      tagsStyles: { b: { color: 'grey' }, i: { textAlign: 'center', fontStyle: 'italic', color: 'grey' } },
+      tagsStyles: { b: { color: '#000000' }, i: { textAlign: 'center', fontStyle: 'italic', color: 'grey' } },
       classesStyles: { 'last-paragraph': { } }
    
     }

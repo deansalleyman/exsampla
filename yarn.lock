@@ -5457,11 +5457,6 @@ react-native-gesture-handler@^1.5.2:
     invariant "^2.2.4"
     prop-types "^15.7.2"
 
-react-native-instagram-embed@^0.0.6:
-  version "0.0.6"
-  resolved "https://registry.yarnpkg.com/react-native-instagram-embed/-/react-native-instagram-embed-0.0.6.tgz#aeb873d8c7c96c0f0bdabe7462b2347855e5714a"
-  integrity sha512-jhScZFSDdcW00XSA5eile5tdzNudZOxSaXww0+91b15sNpbHY1ghmvE8I1t2ibUY7EYDj9VdnM6Mrp3SVU3A5w==
-
 react-native-ratings@^6.3.0:
   version "6.5.0"
   resolved "https://registry.yarnpkg.com/react-native-ratings/-/react-native-ratings-6.5.0.tgz#a1606ccba3c5b54eec8e6cfa4765a45cf0e4ab8d"

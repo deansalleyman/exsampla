@@ -31,6 +31,8 @@ export default function ResearchTitle({ dataObject =[]}) {
       return (<View style={{ flex: 1, alignItems: 'stretch', justifyContent: 'center' }}>
           <HTML
             html={dataObject.title}
+            tagsStyles={tagsStyles}
+            classesStyles={classesStyles}
           />
 
         </View>
