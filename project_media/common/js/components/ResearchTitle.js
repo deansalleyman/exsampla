@@ -1,15 +1,26 @@
 ResearchTitle
-import React, { useState, useEffect } from 'react';
+import React, { useContext } from 'react';
 import { View, Text, Button } from 'react-native';
+import ConfigContext from '../contexts/configContext';
+
+import HTML from "react-native-render-html";
 import PropTypes from 'prop-types';
 export default function ResearchTitle({ dataObject =[]}) {
+  const settings = useContext(ConfigContext);
+  const {tagsStyles, classesStyles } = settings.htmlText;
 
-    console.log('ResearchTitle text', dataObject);
+
     if(Array.isArray(dataObject)){
       return (
         dataObject.map((item, i) =>{
         return (<View style={{ flex: 1, alignItems: 'stretch', justifyContent: 'center' }}>
-        <Text key={i.toString()}>{item.title}</Text>
+
+          <HTML
+            key={i.toString()}
+            html={item.title}
+            tagsStyles={tagsStyles}
+            classesStyles={classesStyles}
+          />
         </View>
 
         )
@@ -18,7 +29,10 @@ export default function ResearchTitle({ dataObject =[]}) {
       )
     } else {
       return (<View style={{ flex: 1, alignItems: 'stretch', justifyContent: 'center' }}>
-        <Text>{dataObject.title}</Text>
+          <HTML
+            html={dataObject.title}
+          />
+
         </View>
 
       )

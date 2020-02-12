@@ -17,6 +17,11 @@ const settings = {
           headerTitleStyle: {
             fontWeight: 'bold',
           }}
+    },
+    htmlText:{
+      tagsStyles: { b: { color: 'grey' }, i: { textAlign: 'center', fontStyle: 'italic', color: 'grey' } },
+      classesStyles: { 'last-paragraph': { } }
+   
     }
 }
 

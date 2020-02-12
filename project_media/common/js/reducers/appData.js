@@ -12,6 +12,12 @@ const appData = (state = initialState, action) => {
       return {
         currentResearchPage: action.id
       };
+    case appConstants.CLOSE:
+      // Reset the app state to begining 
+      return {
+        currentResearchPage: 1
+      };
+
     default:
       return state
   }
