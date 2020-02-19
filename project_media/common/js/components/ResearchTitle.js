@@ -13,7 +13,7 @@ export default function ResearchTitle({ dataObject =[]}) {
     if(Array.isArray(dataObject)){
       return (
         dataObject.map((item, i) =>{
-        return (<View style={{ flex: 1, alignItems: 'stretch', justifyContent: 'center' }}>
+        return (<View style={{ flex: 1, minHeight:'20%'}}>
 
           <HTML
             key={i.toString()}
@@ -28,7 +28,7 @@ export default function ResearchTitle({ dataObject =[]}) {
       })
       )
     } else {
-      return (<View style={{ flex: 1, alignItems: 'stretch', justifyContent: 'center' }}>
+      return (<View style={{  minHeight:'10%',  alignItems: 'center', flexDirection:'column', backgroundColor: '#00CC00' }}>
           <HTML
             html={dataObject.title}
             tagsStyles={tagsStyles}

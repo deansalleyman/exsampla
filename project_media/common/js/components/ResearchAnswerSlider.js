@@ -9,9 +9,9 @@ import toNumber from 'lodash/toNumber';
 
 export default function ResearchAnswerSlider({ dataObject, handleAnswer}) {
   const {default:defaultValue, labels,max ,min ,steps ,type ,var:variable } = dataObject.v_slider;
-console.log('ResearchAnswerSlider', dataObject , handleAnswer, labels, defaultValue)
+
   const [answer, setAnswer] = useState(toNumber(defaultValue));
-  return (<View style={{ flex: 1, justifyContent: 'center', wdith:'100%' }}>
+  return (<View style={{ flex: 1, justifyContent: 'center',  backgroundColor: '#0000CC'}}>
   <Slider
     value={toNumber(answer)}
     minimumValue={toNumber(min)}
