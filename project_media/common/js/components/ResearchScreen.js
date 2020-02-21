@@ -119,7 +119,7 @@ handleScript = (value='', e)  => {
 
 
   return (
-      <View style={{ flex:1, alignItems: 'center', flexDirection:'column' }}>
+      <View style={{ flex:1, alignItems: 'stretch', flexDirection:'column', justifyContent:'flex-start' }}>
 
         
 
@@ -150,7 +150,7 @@ handleScript = (value='', e)  => {
           <ResearchLink dataObject={pageData.link} />
         }
 
-        <View style={{ minHeight: '10%', alignItems: 'center', flexDirection:'row', backgroundColor: '#CC00CC' }}> 
+        <View style={{ minHeight: '10%', justifyContent: 'center', flexDirection:'row', backgroundColor: '#CC00CC' }}> 
 
         {pageData && pageData.button_bar && pageData.button_bar.button_bar && 
           <ResearchButtonBar dataObject={pageData.button_bar.button_bar} handleScript={this.handleScript}/>

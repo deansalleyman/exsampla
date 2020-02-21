@@ -11,7 +11,7 @@ export default function ResearchAnswerSlider({ dataObject, handleAnswer}) {
   const {default:defaultValue, labels,max ,min ,steps ,type ,var:variable } = dataObject.v_slider;
 
   const [answer, setAnswer] = useState(toNumber(defaultValue));
-  return (<View style={{ flex: 1, justifyContent: 'center',  backgroundColor: '#0000CC'}}>
+  return (<View style={{ flex: 1, justifyContent: 'center', flexDirection:'row',  backgroundColor: '#0000CC'}}>
   <Slider
     value={toNumber(answer)}
     minimumValue={toNumber(min)}
