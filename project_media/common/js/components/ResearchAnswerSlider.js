@@ -19,7 +19,10 @@ export default function ResearchAnswerSlider({ dataObject, handleAnswer}) {
     maximumValue={toNumber(max)}
     orientation='vertical'
     onValueChange={value => setAnswer(value)}
-    onSlidingComplete={value => handleAnswer({value})}
+    onSlidingComplete={value =>{ 
+      console.log('slider answer send', value)
+      handleAnswer(value)
+    }}
   />
   <Text>Value: </Text>
 </View>);

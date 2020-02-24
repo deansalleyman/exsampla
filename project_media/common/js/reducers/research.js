@@ -40,6 +40,8 @@ const research = (state = initialState, action) => {
         const answerSet = Object.assign({},state.answerSet);
         const currentAnswerSet = answerSet[state.currentSession] || {};
 
+        console.log('ADD_ANSWER', currentAnswerSet, action)
+
         answerSet[state.currentSession] = answerSetAdd(currentAnswerSet, action);
 
         return Object.assign({},

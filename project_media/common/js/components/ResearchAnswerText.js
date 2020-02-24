@@ -1,7 +1,12 @@
 
 import React, { useState, useEffect } from 'react';
-import { View, Text, Button } from 'react-native';
+
 import PropTypes from 'prop-types';
+import { Input } from 'react-native-elements';
 export default function ResearchAnswerText({ dataObject, handleAnswer}) {
-    return null;
+    console.log('ResearchAnswerText', dataObject);
+    const {text} = dataObject;
+    return (<Input
+        placeholder={text.placeholder}
+      />);
 }

@@ -97,11 +97,11 @@ handleScript = (value='', e)  => {
 
 
 
-    // console.log('mergeWith item', item, parsed, theTarget,lookUpkey, lookUpkeyVar);
+    console.log('mergeWith item', item, parsed, theTarget,lookUpkey, lookUpkeyVar);
     return ({[theKey]:theTarget});
   });
 
-    // console.log('handleScript',parsed, selected);
+   console.log('handleScript',parsed, selected);
       scriptCommand({id:selected.id, script: selectedEnriched});
     } else if(isNumber(gotoStandard)){
 
@@ -113,7 +113,7 @@ handleScript = (value='', e)  => {
 
   handleAnswer = (answer,e) => {
 
-    setAnswer({ answer });
+    setAnswer(answer);
     console.log('handleAnswer', answer)
   }
 
@@ -138,23 +138,21 @@ handleScript = (value='', e)  => {
         }
 
         {pageData && pageData.text &&
-          <ResearchAnswerText dataObject={pageData.text} />
+          <ResearchAnswerText dataObject={pageData.text} handleAnswer={handleAnswer}/>
         }
 
-
-        {pageData && pageData.button &&
-          <ResearchButton dataObject={pageData.button} handleScript={this.handleScript}/>
-        }
 
         {pageData && pageData.link &&
           <ResearchLink dataObject={pageData.link} />
         }
 
-        <View style={{ minHeight: '10%', justifyContent: 'center', flexDirection:'row', backgroundColor: '#CC00CC' }}> 
-
-        {pageData && pageData.button_bar && pageData.button_bar.button_bar && 
-          <ResearchButtonBar dataObject={pageData.button_bar.button_bar} handleScript={this.handleScript}/>
-        }
+        <View style={{ minHeight: '10%', justifyContent: 'space-evenly', flexDirection:'row', alignItems:'stretch', backgroundColor: '#CC00CC' }}> 
+          {pageData && pageData.button &&
+            <ResearchButton dataObject={pageData.button} handleScript={this.handleScript}/>
+          }
+          {pageData && pageData.button_bar && pageData.button_bar.button_bar && 
+            <ResearchButtonBar dataObject={pageData.button_bar.button_bar} handleScript={this.handleScript}/>
+          }
 
         </View>
 

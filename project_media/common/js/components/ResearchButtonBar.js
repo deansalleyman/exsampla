@@ -4,7 +4,7 @@ import { View, Text } from 'react-native';
 import { Button } from 'react-native-elements';
 import PropTypes from 'prop-types';
 export default function ResearchButtonBar({ dataObject =[], handleScript}) {
-    console.log('ResearchButton bar text', dataObject);
+
     const {button, buttons} = dataObject;
     if(Array.isArray(buttons)){
       return (
