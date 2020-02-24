@@ -7,6 +7,7 @@ export default function ResearchAnswerText({ dataObject, handleAnswer}) {
     console.log('ResearchAnswerText', dataObject);
     const {text} = dataObject;
     return (<Input
+    onChange
         placeholder={text.placeholder}
       />);
 }

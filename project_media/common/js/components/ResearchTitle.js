@@ -28,7 +28,7 @@ export default function ResearchTitle({ dataObject =[]}) {
       })
       )
     } else {
-      return (<View style={{  minHeight:'10%',  alignItems: 'center', flexDirection:'column', backgroundColor: '#00CC00' }}>
+      return (<View style={{  minHeight:'10%',  alignItems: 'center', flexDirection:'column' }}>
           <HTML
             html={dataObject.title}
             tagsStyles={tagsStyles}

@@ -22,6 +22,28 @@ const settings = {
       tagsStyles: { b: { color: '#000000' }, i: { textAlign: 'center', fontStyle: 'italic', color: 'grey' } },
       classesStyles: { 'last-paragraph': { } }
    
+    },
+    slider:{
+      thumbTintColor:'#f4511e',
+      minimumTrackTintColor: '#9a9a9a',
+      style:{
+
+        track: {
+          height: 14,
+          borderRadius: 2,
+          backgroundColor: 'white',
+          borderColor:  '#f4511e',
+          borderWidth: 1,
+        },
+        thumb: {
+          width: 30,
+          height: 30,
+          shadowColor: 'black',
+          shadowOffset: {width: 0, height: 1},
+          shadowOpacity: 0.5,
+          shadowRadius: 1,
+        }
+      }
     }
 }
 
