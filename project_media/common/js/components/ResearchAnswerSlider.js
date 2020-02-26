@@ -24,24 +24,39 @@ export default function ResearchAnswerSlider({ dataObject, handleAnswer}) {
 
 
 console.log('slider', min, max, defaultValue)
-  return (<View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', flexDirection:'row'}}>
-  <Slider
-    minimumTrackTintColor={minimumTrackTintColor}
-    thumbImage={require('./img/thumb.png')}
-    thumbStyle={sliderStyles.thumb}
-    thumbTintColor={thumbTintColor}
+  return (
+    <View 
+      style={{ 
+        flex: 1, 
+        justifyContent: 'center', 
+        alignItems: 'center', 
+        flexDirection:'row'
+        }}>
+      <View style={{backgroundColor: 'blue', flex: 0.3}} />
 
-    minimumValue={minimumValue}
-    step={toNumber(steps)}
-    maximumValue={maximumValue}
-    value={(maximumValue - defaultValueInt)}
-    orientation='vertical'
-    onValueChange={value => setAnswer((maximumValue - value))}
-    onSlidingComplete={value => handleAnswer((maximumValue - value))}
-  />
-  <Text>Value: {answer}</Text>
-</View>);
-}
+      <Slider
+        minimumTrackTintColor={minimumTrackTintColor}
+        thumbImage={require('./img/thumb.png')}
+        thumbStyle={sliderStyles.thumb}
+        thumbTintColor={thumbTintColor}
+
+        minimumValue={minimumValue}
+        step={toNumber(steps)}
+        maximumValue={maximumValue}
+        value={(maximumValue - defaultValueInt)}
+        orientation='vertical'
+        onValueChange={value => setAnswer((maximumValue - value))}
+        onSlidingComplete={value => handleAnswer((maximumValue - value))}
+      />
+   
+      <View style={{backgroundColor: 'red', flex: 0.5}} >
+        <Text>Value: {answer}</Text>
+      </View>
+      
+
+    </View>
+    );
+  }
 
 ResearchAnswerSlider.defaultProps = {
   v_slider:{
