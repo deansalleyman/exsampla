@@ -146,7 +146,7 @@ handleScript = (value='', e)  => {
           <ResearchLink dataObject={pageData.link} />
         }
 
-        <View style={{ minHeight: '10%', justifyContent: 'space-evenly', flexDirection:'row', alignItems:'stretch' }}> 
+        <View style={{ minHeight: '10%', justifyContent: 'space-evenly', flexDirection:'row', alignItems:'center' }}> 
           {pageData && pageData.button &&
             <ResearchButton dataObject={pageData.button} handleScript={this.handleScript}/>
           }

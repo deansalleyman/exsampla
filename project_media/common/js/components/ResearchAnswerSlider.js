@@ -29,10 +29,26 @@ console.log('slider', min, max, defaultValue)
       style={{ 
         flex: 1, 
         justifyContent: 'center', 
-        alignItems: 'center', 
+        alignItems: 'stretch', 
         flexDirection:'row'
         }}>
-      <View style={{backgroundColor: 'blue', flex: 0.3}} />
+        <View style={{
+          flex: 0.5,
+          alignItems: 'flex-start',
+          flexDirection:'column',
+          justifyContent:'space-between',
+          paddingLeft: 10
+        }} >
+          {labels.map((label, index) => (
+            <Text 
+            key={index}
+            style={{
+              fontWeight: 'normal'
+            }}
+            >{label}</Text>
+          ))}
+        </View>
+
 
       <Slider
         minimumTrackTintColor={minimumTrackTintColor}
@@ -49,8 +65,16 @@ console.log('slider', min, max, defaultValue)
         onSlidingComplete={value => handleAnswer((maximumValue - value))}
       />
    
-      <View style={{backgroundColor: 'red', flex: 0.5}} >
-        <Text>Value: {answer}</Text>
+      <View style={{flex: 0.5}} >
+        <Text
+         style={{
+          fontWeight: 'bold',
+          fontSize: 30,
+          color: '#cccccc'
+        }}
+        >
+         {answer}
+        </Text>
       </View>
       
 
