@@ -18,26 +18,26 @@ export default function ResearchAnswerSlider({ dataObject, handleAnswer}) {
   const defaultValueInt = toNumber(defaultValue);
 
   const [answer, setAnswer] = useState(defaultValueInt);
+  const [labelSelected, setLabelSelected] = useState('');
   const settings = useContext(ConfigContext);
   const {style, minimumTrackTintColor , thumbTintColor} = settings.slider;
 
   const sliderStyles = StyleSheet.create(style);
   const numberRangeArray = range(minimumValue, maximumValue, (maximumValue / labels.length));
-  let labelSelected = '';
-  const labelsReversed = [...labels.reverse()];
+ 
+  const labelsC = [...labels]
+  const labelsReversed = [...labelsC.reverse()];
 
   useEffect(() => {
     const theLabelIndex = numberRangeArray.reduce((sum, current, i, c) => {
       const startRange = (c[i-1])|| 0;
     const labelI =  (inRange(answer, startRange, current  ));
 
-    console.log('labelI',answer, labelI,i, labelsReversed[i])
-
     sum =  (labelI)? (labelsReversed[i] || '') : sum;
     return sum;
     }, '')
-    
-console.log('numberRangeArray', numberRangeArray, theLabelIndex)
+    setLabelSelected(theLabelIndex);
+console.log('numberRangeArray', numberRangeArray, labelSelected)
   },[answer]);
 
 
@@ -52,7 +52,7 @@ console.log('slider', min, max, defaultValue)
       style={{ 
         flex: 1 ,
         justifyContent: 'center', 
-        alignItems: 'stretch', 
+        // alignItems: 'stretch', 
         flexDirection:'row'
         }}>
         <View style={{
@@ -100,15 +100,17 @@ console.log('slider', min, max, defaultValue)
           </Text>
         </View>
       </View>
-      <View style={{backgroundColor:'gray'}} >
+      <View style={{
+        backgroundColor:'white',
+        minHeight:20}} >
           <Text
             style={{
               fontWeight: 'bold',
-              fontSize: 30,
-              color: '#CCCCCC'
-            }}
-          >
-          {labelSelected}
+              fontSize: 18,
+              color: '#000000'
+            }}>
+              
+            {labelSelected}
           </Text>
         </View>
 
