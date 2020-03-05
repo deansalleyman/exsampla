@@ -3,9 +3,8 @@ import { View, Text, Button, StyleSheet } from 'react-native';
 import PropTypes from 'prop-types';
 import { Slider } from 'react-native-elements';
 import toNumber from 'lodash/toNumber';
-import inRange from 'lodash/inRange';
 import range from 'lodash/range';
-import findIndex from 'lodash/findIndex';
+import indexOf from 'lodash/indexOf';
 import ConfigContext from '../contexts/configContext';
 
 
@@ -29,19 +28,19 @@ export default function ResearchAnswerSlider({ dataObject, handleAnswer}) {
   const labelsReversed = [...labelsC.reverse()];
 
   useEffect(() => {
-    const theLabelIndex = numberRangeArray.reduce((sum, current, i, c) => {
-      const startRange = (c[i-1])|| 0;
-    const labelI =  (inRange(answer, startRange, current  ));
+ 
 
-    sum =  (labelI)? (labelsReversed[i] || '') : sum;
-    return sum;
-    }, '')
+    const output = numberRangeArray.reduce((prev, curr) => Math.abs(curr - answer) < Math.abs(prev - answer) ? curr : prev);
+    const theLabelIndex = labelsReversed[indexOf(numberRangeArray, output)]
+
     setLabelSelected(theLabelIndex);
-console.log('numberRangeArray', numberRangeArray, labelSelected)
-  },[answer]);
+
+    console.log('useEffect',theLabelIndex,output, labelsReversed )
+
+  },[answer, variable]);
 
 
-console.log('slider', min, max, defaultValue)
+console.log('slider', min, max, defaultValue, (maximumValue - defaultValueInt))
   return (
     <View 
     style={{ 
@@ -84,8 +83,8 @@ console.log('slider', min, max, defaultValue)
             maximumValue={maximumValue}
             value={(maximumValue - defaultValueInt)}
             orientation='vertical'
-            onValueChange={value => setAnswer((maximumValue - value))}
-            onSlidingComplete={value => handleAnswer((maximumValue - value))}
+            onValueChange={value => setAnswer(Math.round((maximumValue - value)))}
+            onSlidingComplete={value => handleAnswer(answer)}
           />
    
         <View style={{flex: 0.5}} >
