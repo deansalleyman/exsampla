@@ -16,8 +16,12 @@ export default function ResearchAnswerSlider({ dataObject, handleAnswer}) {
   const maximumValue = toNumber(max);
   const defaultValueInt = toNumber(defaultValue);
 
+
+
   const [answer, setAnswer] = useState(defaultValueInt);
   const [labelSelected, setLabelSelected] = useState('');
+
+
   const settings = useContext(ConfigContext);
   const {style, minimumTrackTintColor , thumbTintColor} = settings.slider;
 
@@ -30,17 +34,29 @@ export default function ResearchAnswerSlider({ dataObject, handleAnswer}) {
   useEffect(() => {
  
 
+    setAnswer( defaultValueInt);
+
+    console.log('useEffect reset', defaultValueInt, 'answer',answer )
+
+  },[variable]);
+
+  useEffect(() => {
+ 
+
     const output = numberRangeArray.reduce((prev, curr) => Math.abs(curr - answer) < Math.abs(prev - answer) ? curr : prev);
     const theLabelIndex = labelsReversed[indexOf(numberRangeArray, output)]
 
     setLabelSelected(theLabelIndex);
 
-    console.log('useEffect',theLabelIndex,output, labelsReversed )
-
-  },[answer, variable]);
+    console.log('useEffect',answer,variable, theLabelIndex,output, labelsReversed  )
 
 
-console.log('slider', min, max, defaultValue, (maximumValue - defaultValueInt))
+  },[answer,variable]);
+
+ 
+
+
+console.log('slider', min, max, defaultValue, (maximumValue - defaultValueInt),answer)
   return (
     <View 
     style={{ 
@@ -83,7 +99,10 @@ console.log('slider', min, max, defaultValue, (maximumValue - defaultValueInt))
             maximumValue={maximumValue}
             value={(maximumValue - defaultValueInt)}
             orientation='vertical'
-            onValueChange={value => setAnswer(Math.round((maximumValue - value)))}
+            onValueChange={value => {
+              console.log('onValueChange', value, (maximumValue - value))
+              setAnswer(Math.round((maximumValue - value)))}
+            }
             onSlidingComplete={value => handleAnswer(answer)}
           />
    
