@@ -3,7 +3,7 @@ import { View, Text, Button, StyleSheet } from 'react-native';
 import PropTypes from 'prop-types';
 import { Slider } from 'react-native-elements';
 import toNumber from 'lodash/toNumber';
-import range from 'lodash/range';
+
 import indexOf from 'lodash/indexOf';
 import ConfigContext from '../contexts/configContext';
 
@@ -26,10 +26,36 @@ export default function ResearchAnswerSlider({ dataObject, handleAnswer}) {
   const {style, minimumTrackTintColor , thumbTintColor} = settings.slider;
 
   const sliderStyles = StyleSheet.create(style);
-  const numberRangeArray = range(minimumValue, maximumValue, (maximumValue / labels.length));
+
+  function range(start, stop, step) {
+    var a = [start], b = start;
+    while (b < stop) {
+        a.push(b += step || 1);
+    }
+    console.log('a',a,start, stop, step);
+    return a;
+}
+  const numberRangeArray = range(minimumValue, maximumValue, (maximumValue / (labels.length-1)) );
+
+  console.log('minimumValue', minimumValue,'maximumValue', maximumValue)
  
   const labelsC = [...labels]
   const labelsReversed = [...labelsC.reverse()];
+
+  function closest(num, arr) {
+    var curr = arr[0];
+    var diff = Math.abs (num - curr);
+    for (var val = 0; val < arr.length; val++) {
+        var newdiff = Math.abs (num - arr[val]);
+        if (newdiff < diff) {
+            diff = newdiff;
+            curr = arr[val];
+        }
+    }
+    return curr;
+}
+
+
 
   useEffect(() => {
  
@@ -43,20 +69,25 @@ export default function ResearchAnswerSlider({ dataObject, handleAnswer}) {
   useEffect(() => {
  
 
-    const output = numberRangeArray.reduce((prev, curr) => Math.abs(curr - answer) < Math.abs(prev - answer) ? curr : prev);
+    const output = numberRangeArray.reduce((prev, curr) => {
+     // console.log('reduce', answer, Math.abs(curr - answer), Math.abs(prev - answer))
+      return (Math.abs(curr - answer) < Math.abs(prev - answer) ? curr : prev)
+    },0);
     const theLabelIndex = labelsReversed[indexOf(numberRangeArray, output)]
 
     setLabelSelected(theLabelIndex);
 
-    console.log('useEffect',answer,variable, theLabelIndex,output, labelsReversed  )
+// console.log(closest(answer, numberRangeArray));
+
+    console.log('useEffect',answer,'output:',output,'output2:',closest(answer, numberRangeArray), 'numberRangeArray:', numberRangeArray ,'index:',indexOf(numberRangeArray, output),'theLabelIndex:', theLabelIndex,'labelsReversed:',labelsReversed);
 
 
   },[answer,variable]);
 
- 
+ const iniSlider =  (maximumValue - defaultValueInt);
 
 
-console.log('slider', min, max, defaultValue, (maximumValue - defaultValueInt),answer)
+console.log('slider', min, max, defaultValue,'iniSlider: ', iniSlider ,answer)
   return (
     <View 
     style={{ 
@@ -97,10 +128,9 @@ console.log('slider', min, max, defaultValue, (maximumValue - defaultValueInt),a
             minimumValue={minimumValue}
             step={toNumber(steps)}
             maximumValue={maximumValue}
-            value={(maximumValue - defaultValueInt)}
+            value={iniSlider}
             orientation='vertical'
             onValueChange={value => {
-              console.log('onValueChange', value, (maximumValue - value))
               setAnswer(Math.round((maximumValue - value)))}
             }
             onSlidingComplete={value => handleAnswer(answer)}
