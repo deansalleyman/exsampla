@@ -6,125 +6,212 @@
  * @flow
  */
 
- 
+import settings from './config/settings';
+
+import React, {useEffect} from 'react';
+import {Alert} from 'react-native';
+
+import {Colors} from 'react-native/Libraries/NewAppScreen';
+
+import {NavigationContainer} from '@react-navigation/native';
+import {createStackNavigator} from '@react-navigation/stack';
+
+import AuthLoadingScreenContainer from './project_media/common/js/containers/AuthLoadingScreenContainer';
+import LoginPageContainer from './project_media/common/js/containers/LoginPageContainer';
+import PageResearchContainer from './project_media/common/js/containers/PageResearchContainer';
 import {
-  SafeAreaView,
-  StyleSheet,
-  ScrollView,
-  View,
-  Text,
-  StatusBar,
-} from 'react-native';
+  ConfigProvider,
+  ConfigConsumer,
+} from './project_media/common/js/contexts/configContext';
+
+import {Provider} from 'react-redux'
+import {createStore, applyMiddleware} from 'redux';
+import {persistStore} from 'redux-persist';
+import {PersistGate} from 'redux-persist/integration/react'
+
+import {ThemeProvider} from 'react-native-elements';
+
+import rootReducer from './project_media/common/js/reducers';
+
+import {connect} from 'react-redux';
 
 import {
-  Header,
-  LearnMoreLinks,
-  Colors,
-  DebugInstructions,
-  ReloadInstructions,
-} from 'react-native/Libraries/NewAppScreen';
+  fetchInitialData,
+  notificationActions,
+  appActions,
+  userActions,
+} from './project_media/common/js/actions';
 
-import {createAppContainer, createSwitchNavigator} from 'react-navigation';
-import {createStackNavigator} from 'react-navigation-stack';
+import rootEpic from './project_media/common/js/epics';
 
-import HomeScreen from './project_media/common/js/components/HomeScreen'
-import ProfileScreen from './project_media/common/js/components/ProfileScreen';
+import {createEpicMiddleware} from 'redux-observable';
+import {logger} from 'redux-logger';
 
+const epicMiddleware = createEpicMiddleware();
 
+const middlewares = [epicMiddleware];
 
-// const App: () => React$Node = () => {
-//   return (
-//     <>
-//       <StatusBar barStyle="dark-content" />
-//       <SafeAreaView>
-//         <ScrollView
-//           contentInsetAdjustmentBehavior="automatic"
-//           style={styles.scrollView}>
-//           <Header />
-//           {global.HermesInternal == null ? null : (
-//             <View style={styles.engine}>
-//               <Text style={styles.footer}>Engine: Hermes</Text>
-//             </View>
-//           )}
-//           <View style={styles.body}>
-//             <View style={styles.sectionContainer}>
-//               <Text style={styles.sectionTitle}>Hello World</Text>
-//               <Text style={styles.sectionDescription}>
-//                 Edit <Text style={styles.highlight}>App.js</Text> to change this
-//                 screen and then come back to see your edits...
-//               </Text>
-//             </View>
-//             <View style={styles.sectionContainer}>
-//               <Text style={styles.sectionTitle}>See Your Changes</Text>
-//               <Text style={styles.sectionDescription}>
-//                 <ReloadInstructions />
-//               </Text>
-//             </View>
-//             <View style={styles.sectionContainer}>
-//               <Text style={styles.sectionTitle}>Debug</Text>
-//               <Text style={styles.sectionDescription}>
-//                 <DebugInstructions />
-//               </Text>
-//             </View>
-//             <View style={styles.sectionContainer}>
-//               <Text style={styles.sectionTitle}>Learn More</Text>
-//               <Text style={styles.sectionDescription}>
-//                 Read the docs to discover what to do next:
-//               </Text>
-//             </View>
-//             <LearnMoreLinks />
-//           </View>
-//         </ScrollView>
-//       </SafeAreaView>
-//     </>
-//   );
-// };
+if (process.env.NODE_ENV === 'development') {
+  middlewares.push(logger);
+}
 
-const styles = StyleSheet.create({
-  scrollView: {
-    backgroundColor: Colors.lighter,
+const store = createStore(rootReducer, applyMiddleware(...middlewares));
+
+epicMiddleware.run(rootEpic);
+
+const persistor = persistStore(store)
+
+const MyTheme = {
+  dark: false,
+  colors: {
+    primary: 'rgb(255, 45, 85)',
+    background: '#FFFFFF',
+    card: 'rgb(255, 255, 255)',
+    text: 'rgb(28, 28, 30)',
+    border: 'rgb(199, 199, 204)',
   },
-  engine: {
-    position: 'absolute',
-    right: 0,
-  },
-  body: {
-    backgroundColor: Colors.white,
-  },
-  sectionContainer: {
-    marginTop: 32,
-    paddingHorizontal: 24,
-  },
-  sectionTitle: {
-    fontSize: 24,
-    fontWeight: '600',
-    color: Colors.black,
-  },
-  sectionDescription: {
-    marginTop: 8,
-    fontSize: 18,
-    fontWeight: '400',
-    color: Colors.dark,
-  },
-  highlight: {
-    fontWeight: '700',
-  },
-  footer: {
-    color: Colors.dark,
-    fontSize: 12,
-    fontWeight: '600',
-    padding: 4,
-    paddingRight: 12,
-    textAlign: 'right',
-  },
-});
+};
 
+const Stack = createStackNavigator();
 
-const MainNavigator = createStackNavigator({
-  Home: {screen: HomeScreen},
-  Profile: {screen: ProfileScreen},
-});
+const mapStateToProps = state => {
+  const {loggingIn = false, loggedIn = false, user} = state.authentication;
 
-const App = createAppContainer(MainNavigator);
+  const {isFetching, dataLoaded} = state.initialData;
 
-export default App;
+  return {
+    loggingIn,
+    loggedIn,
+    user,
+    isFetching,
+    dataLoaded,
+    settings,
+    persistor
+  }
+}
+
+const mapDispatchToProps = dispatch => {
+  return {
+    fetchInitialData: (user = '') => {
+      dispatch(fetchInitialData(user))
+    },
+    initiateSchedule: (startStop = false) => {
+      dispatch(notificationActions.initiateSchedule(startStop))
+    },
+    scheduleNotification: (date, title, message) => {
+      dispatch(notificationActions.scheduleNotification(date, title, message))
+    },
+    addPersistor: payload => {
+      dispatch(appActions.addPersistor(payload))
+    },
+    onLogOut: () => {
+      dispatch(userActions.logOut())
+    }
+  }
+}
+
+/**
+ * AppRoot
+ * @param {*} props
+ * At this point we should have the resolved persited data, so can act upon that state
+ *
+ */
+const AppRoot = props => {
+  const {
+    loggingIn,
+    loggedIn,
+    user,
+    isFetching,
+    fetchInitialData,
+    dataLoaded,
+    isSignout,
+    settings,
+    scheduleNotification,
+    addPersistor,
+    persistor,
+  } = props;
+  const {header = {}, pageTitles = {}, theme = MyTheme, debug = {} } = settings
+
+  console.log('props', props)
+  useEffect(() => {
+    //appActions.reset();
+
+    // Add persitor to store
+    addPersistor(persistor);
+
+    if (debug.notifcations){
+      scheduleNotification();
+    }
+
+    // Test if A logged in?
+    // If not logged in then sign in
+    // If logged in already ie we have the user token/email
+    // then show loading screen whilst we fetch data
+
+    // if we do not already have it fetch inital data
+    if (dataLoaded == false && loggedIn && user) {
+      fetchInitialData(user);
+    }
+  }, [addPersistor, dataLoaded, fetchInitialData, loggedIn, persistor, user]);
+
+  return (
+    <NavigationContainer theme={theme}>
+      <Stack.Navigator screenOptions={header.style}>
+        {isFetching || (dataLoaded == false && loggedIn) ? (
+          // We haven't finished checking for the token yet
+
+          <Stack.Screen
+            name={pageTitles.loading}
+            component={AuthLoadingScreenContainer}
+          />
+        ) : !loggedIn ? (
+          // No token found, user isn't signed in
+          <Stack.Screen
+            name="SignIn"
+            component={LoginPageContainer}
+            options={{
+              title: pageTitles.auth,
+              // When logging out, a pop animation feels intuitive
+              animationTypeForReplace: isSignout ? 'pop' : 'push',
+            }}
+          />
+        ) : (
+          // User is signed in
+          <Stack.Screen
+            name="Research"
+            component={PageResearchContainer}
+            options={{title: pageTitles[1]}}
+          />
+        )}
+      </Stack.Navigator>
+    </NavigationContainer>
+  )
+};
+
+const AppHolderContainer = connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(AppRoot)
+
+export default function App(props) {
+  const nativeElementsTheme = {
+    Button: {
+      raised: false,
+    },
+    Slider: {
+      width: '100%'
+    }
+  };
+
+  return (
+    <Provider store={store}>
+      <PersistGate loading={null} persistor={persistor}>
+        <ConfigProvider value={settings}>
+          <ThemeProvider theme={nativeElementsTheme}>
+            <AppHolderContainer />
+          </ThemeProvider>
+        </ConfigProvider>
+      </PersistGate>
+    </Provider>
+  )
+}
