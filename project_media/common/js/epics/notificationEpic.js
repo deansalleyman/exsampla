@@ -55,7 +55,7 @@ export const cancelScheduleLogOutEpic = ( action$ , state$ ) => action$.pipe(
 
 export const cancelLocalNotificationIdEpic = ( action$ , state$ ) => action$.pipe(
   filter(action => action.type === notificationConstants.CANCEL_LOCAL_NOTIFICATION),
-  tap(({id}) => notification.cancelLocalNotifications({id})),
+  tap((id) => notification.cancelLocalNotifications({id})),
   ignoreElements()
 )
 

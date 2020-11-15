@@ -9,7 +9,7 @@ import md5 from 'md5';
 import isUndefined from 'lodash/isUndefined';
 import settings from '../../../../config/settings';
 
-const scriptCommandEpic = action$ => action$.pipe(
+const scriptCommandEpic = (action$, state$) => action$.pipe(
     filter(action => action.type === researchConstants.SCRIPT_COMMAND),
     switchMap((action)=> {
       const actionReturn = [];
@@ -22,6 +22,9 @@ const scriptCommandEpic = action$ => action$.pipe(
         ]
        */
       const {id, script:scripts} = action.payload;
+      const {notifications:{notificationActioned:{data:{timeslot} ={}}={}}} = state$.value;
+
+      console.log('SCRIPT_COMMAND',timeslot, id )
 
 
         scripts.map((item)=>{

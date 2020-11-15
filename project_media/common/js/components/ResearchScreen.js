@@ -66,11 +66,15 @@ export default function ResearchScreen(props) {
       })
       .catch(err => console.error('An error occurred', err))
   }
+  /**
+   * handleScript
+   * value: <string> = "save?var=alert2&goto=110" | "saveFatigued" | "103"
+   */
   handleScript = (value = '', e) => {
     const params = value.split(/[?]+/)
     /**
      * scriptKey = save | saveFatigued
-     * parsed = { goto: "110", var: "alert2" }
+     * if scriptKey = save then parsed = { goto: "110", var: "alert2" }
      */
     const [scriptKey, path] = params
     const parsed = qs.parse(path, {ignoreQueryPrefix: true})
@@ -160,6 +164,7 @@ export default function ResearchScreen(props) {
         scriptCommand({id: selected.id, script: selectedEnriched})
       }
     } else if (isNumber(gotoStandard)){
+      // simply page number as a string parsed from script 'goto'
 
       navigateNext(gotoStandard)
     }

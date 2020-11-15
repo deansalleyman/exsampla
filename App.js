@@ -98,8 +98,8 @@ const mapDispatchToProps = dispatch => {
     initiateSchedule: (startStop = false) => {
       dispatch(notificationActions.initiateSchedule(startStop))
     },
-    scheduleNotification: (date, title, message) => {
-      dispatch(notificationActions.scheduleNotification(date, title, message))
+    scheduleNotification: ({date, title, message, playSound ,soundName ,timeslot}) => {
+      dispatch(notificationActions.scheduleNotification({date, title, message, playSound ,soundName ,timeslot}))
     },
     addPersistor: payload => {
       dispatch(appActions.addPersistor(payload))
@@ -140,7 +140,11 @@ const AppRoot = props => {
     addPersistor(persistor);
 
     if (debug.notifcations){
-      scheduleNotification();
+      scheduleNotification({
+        timeslot: 1,
+        title: "Scheduled Notification Test",
+        message: "My Notification Message Test"
+      });
     }
 
     // Test if A logged in?

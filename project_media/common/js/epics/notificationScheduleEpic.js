@@ -71,7 +71,7 @@ const {notifications:{title, message, dayRanges, minGap=90}={}}= settings;
        const dayScheduleFormated =  dayRanges
        .map((item) => theday.hour(random(...item)).minute(random(0,59)).clone())
        .filter((item)=>{ 
-         console.log('filter item', item, i)
+
          if (i){
           //  dont schedule a notification for today
           return true;
@@ -81,9 +81,10 @@ const {notifications:{title, message, dayRanges, minGap=90}={}}= settings;
          }
         })
        .reduce((accumulator,currentValue,currentIndex) => {
+         console.log('accumulator', currentValue,currentIndex)
           if(accumulator.length){
             // Work out duration from last entry 
-            const prevTime = accumulator[currentIndex-1]
+            const prevTime = accumulator[currentIndex-1].date;
             const durationLastEntry = moment.duration(currentValue.diff(prevTime)).asMinutes();
             if ( durationLastEntry <= minGap){
               // find the gap
@@ -94,11 +95,11 @@ const {notifications:{title, message, dayRanges, minGap=90}={}}= settings;
               currentValue.add(halfDur, 'minutes');
             }
           }
-        accumulator.push(currentValue);
+        accumulator.push({date:currentValue, timeslot: (currentIndex + 1)});
     
         return accumulator;
         },[])
-        .map((item) => item.toDate());
+        .map((item) => ({date:item.date.toDate(), timeslot: item.timeslot}));
     
     
     
@@ -118,11 +119,12 @@ const notificationScheduleEpic = ( action$ , state$ ) => action$.pipe(
     tap(item => notificationActions.cancelSchedule()),
     switchMap(item => from(dateArrayFn(state$.value))),
     tap(item => console.log('Time Schedule', item)),
-    map(data => notificationActions.scheduleNotification(
-        data,
+    map(({date, timeslot })=> notificationActions.scheduleNotification(
+        {date,
         title,
-        message
-        ))
+        message,
+        timeslot
+        }))
 )
 
 export default notificationScheduleEpic;

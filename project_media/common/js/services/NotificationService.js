@@ -1,12 +1,27 @@
 import PushNotification from 'react-native-push-notification'
 import PushNotificationIOS from '@react-native-community/push-notification-ios';
+import { initial } from 'lodash';
 
 export default class NotificationService {
   //onNotificaitn is a function passed in that is to be called when a
   //notification is to be emitted.
   constructor(onRegister, onNotification) {
     this.configure(onRegister, onNotification)
-    this.lastId = 0
+    this.lastId = 0;
+
+    this.init();
+  }
+
+  init(){
+
+    PushNotification.createChannel(
+      {
+        channelId: "exsampla-id", // (required)
+        channelName: "exsampla channel", // (required)
+      },
+      (created) => console.log(`createChannel returned '${created}'`) // (optional) callback returns whether the channel was created, false means it already existed.
+    );
+  
   }
 
   configure(onRegister, onNotification) {
@@ -62,8 +77,9 @@ export default class NotificationService {
     message = "My Notification Message",
     playSound = true,
     soundName = 'default',
+    timeslot = 0
   }) {
-    console.log('scheduleNotification', date);
+    console.log('scheduleNotification', date, timeslot);
     this.lastId++
     PushNotification.localNotificationSchedule({
       id: '' + this.lastId,
@@ -72,9 +88,11 @@ export default class NotificationService {
       message,
       playSound,
       soundName,
+      channelId: 'exsampla-id',
+      userInfo: {timeslot:timeslot}
     })
 
-    return this.lastId
+    return ({id: this.lastId, timeslot})
   }
 
   checkPermission(cbk) {
@@ -89,7 +107,7 @@ export default class NotificationService {
     PushNotification.cancelLocalNotifications({id: '' + this.lastId});
   }
 
-  cancelLocalNotificationId(id) {
+  cancelLocalNotificationId({id}) {
     PushNotification.cancelLocalNotifications({id: '' + id});
   }
   cancelAll() {

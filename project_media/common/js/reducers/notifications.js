@@ -9,7 +9,7 @@ import {notificationConstants, appConstants} from '../constants';
 
 const initialState = {
   scheduleRunning: false,
-  notificationsScheduled: []
+  notificationsScheduled: {}
 };
 
 const notifications = (state = initialState, action) => {
@@ -19,18 +19,24 @@ const notifications = (state = initialState, action) => {
         scheduleRunning: action.payload
       };
     case notificationConstants.NOTIFICATION_SAVE:
-      const {notificationsScheduled = []} = state;
-      return {
-        notificationsScheduled: [...notificationsScheduled, action.payload]
-      };
+      const {notificationsScheduled:tempObj = {}} = state;
+
+      const notificationsScheduled = Object.assign({}, tempObj);
+
+      notificationsScheduled[action.payload.id] = action.payload;
+
+      return Object.assign({}, state, {
+        notificationsScheduled
+      })
     case notificationConstants.NOTIFICATION_ACTIONED:
+      
       return Object.assign({}, state, {
         notificationActioned: action.payload
       })
     case notificationConstants.CANCEL_SCHEDULE:
       return Object.assign({}, state, {
         scheduleRunning: false,
-        notificationsScheduled: []
+        notificationsScheduled: {}
       })
     case notificationConstants.USER_PERMISSIONS_RESPONSE:
       return Object.assign({}, state, {
@@ -40,7 +46,7 @@ const notifications = (state = initialState, action) => {
       // Reset the app state to begining
       return {
         scheduleRunning: false,
-        notificationsScheduled: []
+        notificationsScheduled: {}
       };
     default:
       return state

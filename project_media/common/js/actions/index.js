@@ -136,19 +136,21 @@ const initiateSchedule = (startStop = true) => ({
   startStop
 })
 
-const scheduleNotification = (
+const scheduleNotification = ({  
   date,
   title,
   message,
   playSound = true,
-  soundName = 'default'
-) => ({
+  soundName = 'default',
+  timeslot = 0
+}) => ({
   type: notificationConstants.SCHEDULE_NOTIFICATION,
   date,
   title,
   message,
   playSound,
-  soundName
+  soundName,
+  timeslot
 })
 
 const notificationActioned = payload => ({
