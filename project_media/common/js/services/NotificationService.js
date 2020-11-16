@@ -79,7 +79,7 @@ export default class NotificationService {
     soundName = 'default',
     timeslot = 0
   }) {
-    console.log('scheduleNotification', date, timeslot);
+    console.log('scheduleNotification',this.lastId, date, timeslot);
     this.lastId++
     PushNotification.localNotificationSchedule({
       id: '' + this.lastId,
