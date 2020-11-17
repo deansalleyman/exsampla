@@ -20,13 +20,24 @@ const scriptCommandEpic = (action$, state$) => action$.pipe(
           save: {var: "focussed", answer: 1},   
           goto: {id: "5"}
         ]
+
+        payload: 
+
+        id: "saveFatigued"
+
+        script:[
+        {save: {var: "fatigued", answer: 45}}
+        {goto_if: {condition: "timeslot=3", id: "111"}}
+        {submit: {}}
+        {goto: {id: "113"}}
+        ]
        */
       const {id, script:scripts} = action.payload;
       const {notifications:{notificationActioned:{data:{timeslot} ={}}={}}} = state$.value;
 
       console.log('SCRIPT_COMMAND',timeslot, id )
 
-
+        // loop through here allowing escape clause for goto_if
         scripts.map((item)=>{
           const [theKey = '']= keys(item);
           const theTarget = item[theKey];

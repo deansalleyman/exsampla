@@ -117,6 +117,16 @@ export default class NotificationService {
       PushNotificationIOS.removeAllDeliveredNotifications()
     } catch (error) {}
   }
+
+  clearActioned(id) {
+    console.log('clearActioned', id)
+    PushNotification.cancelLocalNotifications({id: id});
+    try {
+      PushNotificationIOS.removeAllDeliveredNotifications();
+      PushNotificationIOS.removeAllPendingNotificationRequests();
+    } catch (error) {}
+  }
+
   getScheduledLocalNotifications(callback) {
     try {
       PushNotificationIOS.getScheduledLocalNotifications(callback)
