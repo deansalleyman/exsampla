@@ -138,7 +138,7 @@ export default function ResearchAnswerSlider({ dataObject, handleAnswer}) {
           <Text
             style={{
               fontWeight: 'bold',
-              fontSize: 18,
+              fontSize: 14,
               color: '#000000'
             }}>
               

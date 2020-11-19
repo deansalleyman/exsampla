@@ -28,7 +28,6 @@ export default class NotificationService {
     PushNotification.configure({
       onRegister: onRegister,
       onNotification: function(notification) {
-        console.log('NOTIFICATION:', notification,onNotification, typeof onNotification === 'function');
 
         if (typeof onNotification == 'function') {
           onNotification(notification)
@@ -79,7 +78,7 @@ export default class NotificationService {
     soundName = 'default',
     timeslot = 0
   }) {
-    console.log('scheduleNotification',this.lastId, date, timeslot);
+
     this.lastId++
     PushNotification.localNotificationSchedule({
       id: '' + this.lastId,
@@ -119,7 +118,7 @@ export default class NotificationService {
   }
 
   clearActioned(id) {
-    console.log('clearActioned', id)
+
     PushNotification.cancelLocalNotifications({id: id});
     try {
       PushNotificationIOS.removeAllDeliveredNotifications();

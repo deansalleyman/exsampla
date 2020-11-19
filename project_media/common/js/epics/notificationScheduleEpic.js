@@ -55,7 +55,6 @@ const {notifications:{title, message, dayRanges, minGap=90}={}}= settings;
     const phase2Start = parseInt(phase2_start,10);
 
 
-    console.log('dateArrayFn', metaObj);
     const dateArray = [];
 
     for (let i= phase2Start; i < phase2End; i++) {
@@ -81,7 +80,7 @@ const {notifications:{title, message, dayRanges, minGap=90}={}}= settings;
          }
         })
        .reduce((accumulator,currentValue,currentIndex) => {
-         console.log('accumulator', currentValue,currentIndex)
+
           if(accumulator.length){
             // Work out duration from last entry 
             const prevTime = accumulator[currentIndex-1].date;
@@ -118,7 +117,6 @@ const notificationScheduleEpic = ( action$ , state$ ) => action$.pipe(
     take(1),
     tap(item => notificationActions.cancelSchedule()),
     switchMap(item => from(dateArrayFn(state$.value))),
-    tap(item => console.log('Time Schedule', item)),
     map(({date, timeslot })=> notificationActions.scheduleNotification(
         {date,
         title,

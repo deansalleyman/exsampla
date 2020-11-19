@@ -13,7 +13,7 @@ const notificationHandleEpic = ( action$ , state$ ) => action$.pipe(
     filter(action => action.type === notificationConstants.NOTIFICATION_ACTIONED),
     withLatestFrom(state$),
     mergeMap(([action, state]) => {
-      
+
       const {initialData:{ data: {meta:{undefined:{start_page='1', alert_page='100'}={}}={}}={} }={}}= state;
       const {id} = action.payload;
       const startPage = parseInt(start_page,10);

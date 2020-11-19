@@ -10,7 +10,6 @@ export default function SelectorButtons({ dataObject =[],setForkGoto, handleAnsw
 
     const {selector} = dataObject;
 
-    console.log('SelectorButtons', dataObject);
 
     const settings = useContext(ConfigContext);
     const {selectorButtonsConfig={}} = settings; 
@@ -55,7 +54,7 @@ export default function SelectorButtons({ dataObject =[],setForkGoto, handleAnsw
       return [...acc, ...[{element}]];
   }, []);
 
-  console.log('buttons',buttons, normalizedData)
+
 
 
     if(Array.isArray(dataObject)){

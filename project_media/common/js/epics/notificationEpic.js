@@ -12,14 +12,14 @@ import NotificationService from '../services/NotificationService';
 
 // Called when a remote or local notification is opened or received
 const onNotification = (notif) => {
-  console.log('onNotification', notif)
+
 
   onNotificationFn$.next(notif);
 }
 
 // Called when Token is generated (iOS and Android)
 const onRegister = (token) => {
-  console.log('onRegister', token)
+
 
   onRegister$.next(token);
 }
@@ -36,7 +36,7 @@ const notification = new NotificationService(onRegister,onNotification);
 //Permissions to use notifications
 function handlePerm(perms) {
   userPermissionsResponse$.next(perms);
-  console.log("Permissions", JSON.stringify(perms));
+
 
 }
 
@@ -94,7 +94,6 @@ export const notificationEpic = ( action$ , state$ ) => action$.pipe(
       notification.getScheduledLocalNotifications((ret)=> console.log('getScheduledLocalNotifications', ret))
  
     }),
-    tap(item => console.log('notificationEpic', item)),
     map((payload={}) => notification.scheduleNotification(payload)),
     map(notificationActions.notificationSave)
 )

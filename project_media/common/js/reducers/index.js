@@ -24,7 +24,7 @@ const authenticationPersistConfig = {
 // Pull in settings for data expiry, default 30 days
 const {surveyDataSource: {expireInDays = 30} = {}} = settings;
 
-console.log('initialData expireInDays', expireInDays)
+
 
 const rootReducer = combineReducers({
   initialData,

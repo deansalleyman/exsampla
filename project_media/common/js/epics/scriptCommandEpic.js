@@ -35,13 +35,18 @@ const scriptCommandEpic = (action$, state$) => action$.pipe(
       const {id, script:scripts} = action.payload;
       const {notifications:{notificationActioned:{data:{timeslot} ={}}={}}} = state$.value;
 
-      console.log('SCRIPT_COMMAND',timeslot, id )
 
-        // loop through here allowing escape clause for goto_if
-        scripts.map((item)=>{
+
+        // loop through here allowing escape clause for goto_if 
+        for (let i = 0; i < scripts.length; i++ ) {
+          
+          const item = scripts[i];
+          
           const [theKey = '']= keys(item);
           const theTarget = item[theKey];
-          const {var:varId = '', answer, id:pageId, state:timerState} = theTarget;
+          const {var:varId = '', answer, id:pageId, state:timerState, condition='false'} = theTarget;
+
+
 
           if(theKey == 'save' && !isUndefined(answer)){
 
@@ -69,18 +74,32 @@ const scriptCommandEpic = (action$, state$) => action$.pipe(
             actionReturn.push(appActions.close());
           }
 
+          if(theKey == 'goto_if'){
+
+            // clean up and convert to javascript notation
+            const testCondition = condition.replace(/=/gi,'==');
+
+
+          
+            if(eval(testCondition)) {
+
+              actionReturn.push(appActions.currentResearchPage(pageId));
+              break;
+            } 
+
+          }
 
 
           if(theKey == 'goto'){
-            console.log('goto answer', answer, scripts)
+
             // test here if is number or not
 
             actionReturn.push(appActions.currentResearchPage(pageId));
 
           }
 
-          return item;
-        });
+        }
+
 
 
 

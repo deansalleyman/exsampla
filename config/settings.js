@@ -1,6 +1,6 @@
 const settings = {
   debug: {
-    notifcations: true
+    notifcations: false
   },
   theme: {
     dark: false,
@@ -237,7 +237,7 @@ const settings = {
       b: {color: '#000000'},
       i: {textAlign: 'center', fontStyle: 'italic', color: 'grey'},
     },
-    classesStyles: {content: {fontSize: 22, color: '#000000'}}
+    classesStyles: {content: {fontSize: 18, color: '#000000'}}
   },
   slider: {
     viewContainer: {

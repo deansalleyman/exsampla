@@ -18,7 +18,6 @@ export default function auth(props) {
     // const { navigate } = useNavigation();
     const { onLoginUser, loggingIn, loggedIn,loggingFailure, loginFailureReason, fetchRemoteFailureError,fetchRemoteFailureReason, onLogOut } = props;
     const settings = useContext(ConfigContext);
-    console.log('sign in screen',onLogOut, onLoginUser, loggingIn, loggedIn,loggingFailure, loginFailureReason, fetchRemoteFailureError,fetchRemoteFailureReason)
 
     const {authButtonsConfig={},auth={}, loadingScreen={}} = settings; 
     const [isVisible, setIsVisible] = useState(false);

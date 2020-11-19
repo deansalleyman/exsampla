@@ -132,7 +132,7 @@ const AppRoot = props => {
   } = props;
   const {header = {}, pageTitles = {}, theme = MyTheme, debug = {} } = settings
 
-  console.log('props', props)
+
   useEffect(() => {
     //appActions.reset();
 
@@ -141,7 +141,7 @@ const AppRoot = props => {
 
     if (debug.notifcations){
       scheduleNotification({
-        timeslot: 1,
+        timeslot: 3,
         title: "Scheduled Notification Test",
         message: "My Notification Message Test"
       });

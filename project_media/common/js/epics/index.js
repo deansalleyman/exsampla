@@ -8,6 +8,7 @@ import {
   userPermissionsResponseEpic,
   cancelScheduleEpic,
   cancelScheduleLogOutEpic,
+  cancelLocalNotificationIdEpic
 } from './notificationEpic';
 import notificationScheduleEpic from './notificationScheduleEpic';
 import notificationHandleEpic from './notificationHandleEpic';
@@ -20,6 +21,7 @@ const rootEpic = combineEpics(
   notificationEpic,
   notificationScheduleEpic,
   notificationActionedEpic,
+  cancelLocalNotificationIdEpic,
   cancelScheduleEpic,
   userPermissionsResponseEpic,
   notificationHandleEpic,
