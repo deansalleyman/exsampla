@@ -117,12 +117,12 @@ const settings = {
       color: '#000000',
       textAlign: 'center',
       fontWeight: 'bold',
-      fontSize: 20
+      fontSize: 18
     },
     subTitleStyle: {
       color: '#000000',
       textAlign: 'center',
-      fontSize: 18
+      fontSize: 14
     },
     containerStyle: {
       backgroundColor: '#FFFFFF',

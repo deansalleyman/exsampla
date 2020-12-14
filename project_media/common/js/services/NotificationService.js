@@ -88,7 +88,8 @@ export default class NotificationService {
       playSound,
       soundName,
       channelId: 'exsampla-id',
-      userInfo: {timeslot:timeslot}
+      userInfo: {timeslot:timeslot},
+      allowWhileIdle: true
     })
 
     return ({id: this.lastId, timeslot})
