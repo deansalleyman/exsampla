@@ -1,6 +1,6 @@
 const settings = {
   debug: {
-    notifcations: false
+    notifcations: true
   },
   theme: {
     dark: false,
@@ -57,7 +57,7 @@ const settings = {
     resetText: 'Reset Survey'
   },
   imageAssetsUrl: 'https://leanos.app/RT/images/',
-  api: 'https://leanos.app/RT/',
+  api: 'https://jw5p7mtbyj.execute-api.us-west-2.amazonaws.com/Prod/',
   pageTitles: {
     loading: 'LOADING',
     auth: 'SIGN IN',

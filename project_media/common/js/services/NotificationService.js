@@ -114,7 +114,9 @@ export default class NotificationService {
     PushNotification.cancelAllLocalNotifications()
 
     try {
-      PushNotificationIOS.removeAllDeliveredNotifications()
+      
+      PushNotification.removeAllDeliveredNotifications();
+      PushNotificationIOS.cancelLocalNotifications();
     } catch (error) {}
   }
 

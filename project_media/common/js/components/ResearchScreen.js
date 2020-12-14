@@ -220,11 +220,6 @@ export default function ResearchScreen(props) {
         />
       )}
 
-      {props.currentResearchPage &&
-        (props.currentResearchPage == startPage ||
-          props.currentResearchPage == alertPage) && (
-          <Button onPress={e => onLogOut()} title={auth.resetText} />
-        )}
 
 
 

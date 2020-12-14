@@ -32,7 +32,7 @@ const publishResearchEpic = ( action$ , state$ ) => action$.pipe(
 
 
       const postOptions = {
-          url: settings.api + 'put.php',
+          url: settings.api + 'put',
           method: 'POST',
           responseType: 'text',
           headers: {

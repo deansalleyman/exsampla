@@ -178,14 +178,13 @@ const pageData = {
 };
 
 const returnedData = {
-  data:pageData
+  Item:pageData
 }
 
 
-const fetchInitialDataEpic = action$ => action$.pipe(
+const fetchInitialDataEpic = ( action$ , state$ ) => action$.pipe(
 
   filter(action => action.type === userConstants.LOGIN_REQUEST || action.type === dataConstants.FETCH_INITIAL_DATA),
-  tap(appActions.reset()),
   map(action => {
 
 
@@ -204,7 +203,7 @@ const fetchInitialDataEpic = action$ => action$.pipe(
 
 
       const postOptions = {
-          url: settings.api + 'login.php',
+          url: settings.api + 'login',
           method: 'POST',
           responseType: 'json',
           headers: {
@@ -217,20 +216,31 @@ const fetchInitialDataEpic = action$ => action$.pipe(
         return ajax(postOptions).pipe(
           mergeMap(response => {
 
+            const {initialData:{ data: {meta:{undefined:{version}={}}={}}={} }={}}= state$.value;
+            const {response:{Item:{meta:{version:incomingVersion}={}}={}}={}} = response;
+            const {user} = loginOptions;
 
-            if (response && response.response ){
+            console.log('initialData check',version, incomingVersion, response.response.Item, state$.value );
+
+            if (version != incomingVersion){
+
+         
+
+            if (incomingVersion){
               const normalizedData = normalize(response.response, returnedData);
 
+    
+  
 
               const {entities: intialdataObj={}} = normalizedData;
               const {result:{cookie=''}} = normalizedData;
-              const {user} = loginOptions;
+              
              
              // change to logged in user action
-
             if(!isEmpty(intialdataObj)){
 
-              return of(setInitialData(intialdataObj), 
+              return of(
+                setInitialData(intialdataObj), 
               userActions.success(user),
               appActions.currentResearchPage(1),
               notificationActions.initiateSchedule(true));
@@ -245,6 +255,11 @@ const fetchInitialDataEpic = action$ => action$.pipe(
 
               return of(dataActions.fetchRemoteFailure(true, 'No Data returned'))
             }
+
+          } else {
+            // data not stale so do nothing apart from stop loading indicator and navigate to 1st page
+            return of(dataActions.dataResolved());
+          }
 
             }),
             catchError(error => {

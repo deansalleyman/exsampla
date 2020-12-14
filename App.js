@@ -152,8 +152,8 @@ const AppRoot = props => {
     // If logged in already ie we have the user token/email
     // then show loading screen whilst we fetch data
 
-    // if we do not already have it fetch inital data
-    if (dataLoaded == false && loggedIn && user) {
+    // if already logged in, recall login incase data has changed and existing data is stale 
+    if ( loggedIn && user) {
       fetchInitialData(user);
     }
   }, [addPersistor, dataLoaded, fetchInitialData, loggedIn, persistor, user]);

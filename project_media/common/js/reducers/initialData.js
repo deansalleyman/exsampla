@@ -33,6 +33,11 @@ const initialData = (state = initialState, action) => {
         fetchRemoteFailureError: action.error
       })
 
+    case dataConstants.DATA_RESOLVED:
+      return Object.assign({}, state, {
+        isFetching: false
+      })
+
     case appConstants.PURGE:
       // Reset the app state to begining
       return {

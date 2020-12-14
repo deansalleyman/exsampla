@@ -40,6 +40,10 @@ export const setInitialData = payload => ({
   receivedAt: new Date().getTime()
 })
 
+const dataResolved = () => ({
+  type: dataConstants.DATA_RESOLVED
+})
+
 const loginUser = (user, password, cookie) => ({
   type: userConstants.LOGIN_REQUEST,
   user,
@@ -73,7 +77,8 @@ export const userActions = {
 
 export const dataActions = {
   fetchRemoteFailure,
-  fetchRemoteLoading
+  fetchRemoteLoading,
+  dataResolved
 }
 
 const addAnswer = (answer, id) => ({
