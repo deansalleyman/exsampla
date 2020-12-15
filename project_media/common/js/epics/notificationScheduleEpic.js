@@ -115,14 +115,17 @@ const {notifications:{title, message, dayRanges, minGap=90}={}}= settings;
 const notificationScheduleEpic = ( action$ , state$ ) => action$.pipe(
     filter(action => action.type === notificationConstants.INITIATE_SCHEDULE),
     take(1),
-    tap(item => notificationActions.cancelSchedule()),
     switchMap(item => from(dateArrayFn(state$.value))),
-    map(({date, timeslot })=> notificationActions.scheduleNotification(
+    map(({date, timeslot })=> {
+     return notificationActions.scheduleNotification(
         {date,
         title,
         message,
         timeslot
-        }))
+        })
+      }
+        
+        )
 )
 
 export default notificationScheduleEpic;

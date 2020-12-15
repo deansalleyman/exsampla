@@ -243,6 +243,7 @@ const fetchInitialDataEpic = ( action$ , state$ ) => action$.pipe(
                 setInitialData(intialdataObj), 
               userActions.success(user),
               appActions.currentResearchPage(1),
+              notificationActions.cancelSchedule(),
               notificationActions.initiateSchedule(true));
             } else {
 

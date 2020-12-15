@@ -43,6 +43,7 @@ function handlePerm(perms) {
 
 export const cancelScheduleEpic = ( action$ , state$ ) => action$.pipe(
   filter(action => action.type === notificationConstants.CANCEL_SCHEDULE),
+  tap(item => console.log('cancelScheduleEpic')),
   tap(item => notification.cancelAll()),
   ignoreElements()
 )
