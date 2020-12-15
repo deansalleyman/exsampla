@@ -18,18 +18,21 @@ const publishResearchEpic = ( action$ , state$ ) => action$.pipe(
 
       const {authentication:{user}} = state$.value;
       const {research:{answerSet}} = state$.value;
+      const {initialData:{ data: {meta:{undefined:{version}={}}={}}={} }={}}= state$.value;
 
-      const username = (user)? md5(user) : null;
+
       const dataSet = answerSet[session] || {};
       delete dataSet.start;
       delete dataSet.end;
       dataSet.timestamp = session;
+      dataSet.version = version;
       
       const postVars = {
-        username,
+        username: user,
         data: JSON.stringify(dataSet)
       };
 
+      console.log('postVars', postVars)
 
       const postOptions = {
           url: settings.api + 'put',
@@ -45,6 +48,7 @@ const publishResearchEpic = ( action$ , state$ ) => action$.pipe(
 
         return ajax(postOptions).pipe(
           mergeMap(response => {
+            console.log('postResearch', response)
 
             const {response:responseStatus} = response;
 
