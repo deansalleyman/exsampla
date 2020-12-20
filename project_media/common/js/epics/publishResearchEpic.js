@@ -13,12 +13,15 @@ import settings from '../../../../config/settings';
 
 const publishResearchEpic = ( action$ , state$ ) => action$.pipe(
   filter(action => action.type === researchConstants.SUBMIT),
-  switchMap(item => from(state$.value.research.sessions)),
-  switchMap(session =>{
-
+  switchMap(item => {
+    const {research:{answerSet:sessionKeys}} = state$.value;
+    return from(Object.keys(sessionKeys))
+  }),
+  mergeMap(session => {
       const {authentication:{user}} = state$.value;
-      const {research:{answerSet}} = state$.value;
+      const {research:{answerSet, timeslot}} = state$.value;
       const {initialData:{ data: {meta:{undefined:{version}={}}={}}={} }={}}= state$.value;
+
 
 
       const dataSet = answerSet[session] || {};
@@ -27,19 +30,26 @@ const publishResearchEpic = ( action$ , state$ ) => action$.pipe(
       dataSet.timestamp = session;
       dataSet.version = version;
       
+      // if set from a notification, add to data payload
+      if(timeslot){
+        dataSet.timeslot = timeslot;
+      }
+      
+
+      
       const postVars = {
+        id: session,
         username: user,
         data: JSON.stringify(dataSet)
       };
 
-      console.log('postVars', postVars)
 
       const postOptions = {
           url: settings.api + 'put',
           method: 'POST',
           responseType: 'text',
           headers: {
-            'Content-Type': 'application/x-www-form-urlencoded'
+            'Content-Type': 'application/json'
          },
          body: postVars
 
@@ -47,16 +57,11 @@ const publishResearchEpic = ( action$ , state$ ) => action$.pipe(
 
 
         return ajax(postOptions).pipe(
-          mergeMap(response => {
-            console.log('postResearch', response)
-
-            const {response:responseStatus} = response;
-
-            if (responseStatus && responseStatus == 'Success'){
+          switchMap(response => {
+            const {response:responseStatus, status} = response;
+            if (responseStatus && status == 200){
               return of(researchActions.postResearch(session));
-
             } else {
-
               return of(researchActions.postResearchFailure({error: `could not post research session: ${session}`, response: responseStatus }))
             }
 
@@ -68,6 +73,8 @@ const publishResearchEpic = ( action$ , state$ ) => action$.pipe(
               response: error.xhr.response}))
             })
         )
+
+
   }),
   catchError(error => {
     console.log('catchError B', error);

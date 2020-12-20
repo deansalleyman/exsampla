@@ -55,13 +55,6 @@ const scriptCommandEpic = (action$, state$) => action$.pipe(
           }
 
           if(theKey == 'timer'){
-            const session = Date.now();
-            if(timerState == 'start'){
-              actionReturn.push(researchActions.setSessionId(session));
-            }
-
-
-
             actionReturn.push( researchActions.session(timerState));
           }
 

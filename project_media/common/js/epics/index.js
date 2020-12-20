@@ -12,7 +12,7 @@ import {
 } from './notificationEpic';
 import notificationScheduleEpic from './notificationScheduleEpic';
 import notificationHandleEpic from './notificationHandleEpic';
-import {logOutEpic} from './appEpic';
+import {logOutEpic, setUpSessionEpic, surveyNotNotificationEpic} from './appEpic';
 
 const rootEpic = combineEpics(
   fetchInitialDataEpic,
@@ -26,7 +26,8 @@ const rootEpic = combineEpics(
   userPermissionsResponseEpic,
   notificationHandleEpic,
   logOutEpic,
-  cancelScheduleLogOutEpic
+  cancelScheduleLogOutEpic,
+  setUpSessionEpic
 );
 
 export default rootEpic;

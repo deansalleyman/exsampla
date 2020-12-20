@@ -32,9 +32,12 @@ const research = (state = initialState, action) => {
     case researchConstants.SET_SESSION:
       const {sessions = []} = state;
 
-      const newAnswerSet = {};
+      const newAnswerSet = Object.assign({}, state.answerSet);
       newAnswerSet[action.id] = {};
       const newSessions = [...sessions, action.id];
+      if (action.timeslot){
+        newAnswerSet[action.id].timeslot = action.timeslot;
+      }
 
       return Object.assign({}, state, {
         sessions: newSessions,
@@ -76,6 +79,7 @@ const research = (state = initialState, action) => {
         answerSet: answerSetStore,
         sessions: sessionsCleaned
       });
+
 
     case appConstants.PURGE:
       // Reset the app state to begining

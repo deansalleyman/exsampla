@@ -87,9 +87,10 @@ const addAnswer = (answer, id) => ({
   id
 })
 
-const setSessionId = id => ({
+const setSessionId = (id, timeslot) => ({
   type: researchConstants.SET_SESSION,
-  id
+  id,
+  timeslot
 })
 
 const completeResearch = payload => ({
@@ -123,6 +124,11 @@ const submit = () => ({
   type: researchConstants.SUBMIT
 })
 
+const setTimeslot = timeslot => ({
+  type: researchConstants.SET_TIMESLOT,
+  timeslot
+})
+
 export const researchActions = {
   fetchInitialData,
   addAnswer,
@@ -133,7 +139,8 @@ export const researchActions = {
   setSessionId,
   scriptCommand,
   session,
-  submit
+  submit,
+  setTimeslot
 }
 
 const initiateSchedule = (startStop = true) => ({
