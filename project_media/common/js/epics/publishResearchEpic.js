@@ -19,7 +19,7 @@ const publishResearchEpic = ( action$ , state$ ) => action$.pipe(
   }),
   mergeMap(session => {
       const {authentication:{user}} = state$.value;
-      const {research:{answerSet, timeslot}} = state$.value;
+      const {research:{answerSet}} = state$.value;
       const {initialData:{ data: {meta:{undefined:{version}={}}={}}={} }={}}= state$.value;
 
 
@@ -29,13 +29,6 @@ const publishResearchEpic = ( action$ , state$ ) => action$.pipe(
       delete dataSet.end;
       dataSet.timestamp = session;
       dataSet.version = version;
-      
-      // if set from a notification, add to data payload
-      if(timeslot){
-        dataSet.timeslot = timeslot;
-      }
-      
-
       
       const postVars = {
         id: session,
