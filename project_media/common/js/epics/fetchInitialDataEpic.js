@@ -220,7 +220,6 @@ const fetchInitialDataEpic = ( action$ , state$ ) => action$.pipe(
             const {response:{Item:{meta:{version:incomingVersion}={}}={}}={}} = response;
             const {user} = loginOptions;
 
-            console.log('initialData check',version, incomingVersion, response.response.Item, state$.value );
 
             if (version != incomingVersion){
 

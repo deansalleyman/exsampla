@@ -89,7 +89,8 @@ export default class NotificationService {
       soundName,
       channelId: 'exsampla-id',
       userInfo: {timeslot:timeslot},
-      allowWhileIdle: true
+      allowWhileIdle: true,
+      timeoutAfter: 30000
     })
 
     return ({id: this.lastId, timeslot})

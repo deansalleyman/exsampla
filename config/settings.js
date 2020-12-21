@@ -1,6 +1,6 @@
 const settings = {
   debug: {
-    notifcations: true
+    notifcations: false
   },
   theme: {
     dark: false,
