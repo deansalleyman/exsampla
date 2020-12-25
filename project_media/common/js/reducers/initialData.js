@@ -38,7 +38,7 @@ const initialData = (state = initialState, action) => {
         isFetching: false
       })
 
-    case appConstants.PURGE:
+    case appConstants.PURGE_DATA:
       // Reset the app state to begining
       return {
         isFetching: false,

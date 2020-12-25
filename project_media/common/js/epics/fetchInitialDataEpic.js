@@ -2,7 +2,7 @@ import { filter, mapTo, mergeMap, switchMap,tap, map , catchError, concatMap} fr
 import { ofType } from 'redux-observable';
 import { of } from 'rxjs'
 import { ajax } from 'rxjs/ajax';
-import {fetchInitialData, setInitialData, userActions, researchActions, appActions, dataActions, notificationActions} from '../actions/';
+import { setInitialData, userActions, researchActions, appActions, dataActions, notificationActions} from '../actions/';
 import { normalize, schema } from 'normalizr';
 import _ from 'lodash';
 import isEmpty  from 'lodash/isEmpty';
@@ -188,11 +188,10 @@ const fetchInitialDataEpic = ( action$ , state$ ) => action$.pipe(
   map(action => {
 
 
-    const {user, password:passwordText, cookie} = action;
-    const password = (passwordText)?  md5(passwordText) : undefined;
+    const {user, password, cookie} = action;
+
     return ({
-      user,
-      username: md5(user),
+      username: user,
       ...(password && {password}),
       ...(cookie && {cookie})
     });
@@ -207,7 +206,7 @@ const fetchInitialDataEpic = ( action$ , state$ ) => action$.pipe(
           method: 'POST',
           responseType: 'json',
           headers: {
-            'Content-Type': 'application/x-www-form-urlencoded'
+            'Content-Type': 'application/json'
          },
          body: loginOptions
 
@@ -220,41 +219,45 @@ const fetchInitialDataEpic = ( action$ , state$ ) => action$.pipe(
             const {response:{Item:{meta:{version:incomingVersion}={}}={}}={}} = response;
             const {user} = loginOptions;
 
+            console.log('response', response)
+
 
             if (version != incomingVersion){
 
          
 
-            if (incomingVersion){
-              const normalizedData = normalize(response.response, returnedData);
+              if (incomingVersion){
+                const normalizedData = normalize(response.response, returnedData);
 
+      
     
-  
 
-              const {entities: intialdataObj={}} = normalizedData;
-              const {result:{cookie=''}} = normalizedData;
+                const {entities: intialdataObj={}} = normalizedData;
+                const {result:{cookie=''}} = normalizedData;
+                
               
-             
-             // change to logged in user action
-            if(!isEmpty(intialdataObj)){
+                // change to logged in user action
+                if(!isEmpty(intialdataObj)){
 
-              return of(
-                setInitialData(intialdataObj), 
-              userActions.success(user),
-              appActions.currentResearchPage(1),
-              notificationActions.cancelSchedule(),
-              notificationActions.initiateSchedule(true));
-            } else {
+                  return of(
+                    userActions.failure(true,'Login Failed')
+                    // setInitialData(intialdataObj), 
+                    // userActions.success(user, cookie),
+                    // appActions.currentResearchPage(1),
+                    // notificationActions.cancelSchedule(),
+                    // notificationActions.initiateSchedule(true)
+                  );
+                } else {
 
-              return of(userActions.failure(true,'Login Failed'));
-            }
+                  return of(userActions.failure(true,'Login Failed'));
+                }
 
 
 
-            } else {
+              } else {
 
-              return of(dataActions.fetchRemoteFailure(true, 'No Data returned'))
-            }
+                return of(dataActions.fetchRemoteFailure(true, 'No Data returned'))
+              }
 
           } else {
             // data not stale so do nothing apart from stop loading indicator and navigate to 1st page
@@ -264,8 +267,9 @@ const fetchInitialDataEpic = ( action$ , state$ ) => action$.pipe(
             }),
             catchError(error => {
               console.log('catchError A',postOptions, error);
-              return of(userActions.failure(true, 'No network connection') )}
-            )
+              const {response:{msg:errorMsg='No network connection'}}  = error;
+              return of(userActions.failure(true, errorMsg));
+            })
         )
     }
       ),

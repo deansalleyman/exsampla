@@ -36,7 +36,7 @@ import rootReducer from './project_media/common/js/reducers';
 import {connect} from 'react-redux';
 
 import {
-  fetchInitialData,
+  researchActions,
   notificationActions,
   appActions,
   userActions,
@@ -75,7 +75,7 @@ const MyTheme = {
 const Stack = createStackNavigator();
 
 const mapStateToProps = state => {
-  const {loggingIn = false, loggedIn = false, user} = state.authentication;
+  const {loggingIn = false, loggedIn = false, user, cookie} = state.authentication;
 
   const {isFetching, dataLoaded} = state.initialData;
 
@@ -86,14 +86,15 @@ const mapStateToProps = state => {
     isFetching,
     dataLoaded,
     settings,
-    persistor
+    persistor,
+    cookie
   }
 }
 
 const mapDispatchToProps = dispatch => {
   return {
-    fetchInitialData: (user = '') => {
-      dispatch(fetchInitialData(user))
+    fetchInitialData: (cookie) => {
+      dispatch(researchActions.fetchInitialData(cookie))
     },
     initiateSchedule: (startStop = false) => {
       dispatch(notificationActions.initiateSchedule(startStop))
@@ -121,6 +122,7 @@ const AppRoot = props => {
     loggingIn,
     loggedIn,
     user,
+    cookie,
     isFetching,
     fetchInitialData,
     dataLoaded,
@@ -129,8 +131,11 @@ const AppRoot = props => {
     scheduleNotification,
     addPersistor,
     persistor,
+    onLogOut
   } = props;
   const {header = {}, pageTitles = {}, theme = MyTheme, debug = {} } = settings
+
+  console.log('app',isFetching ,dataLoaded , loggedIn)
 
 
   useEffect(() => {
@@ -154,9 +159,10 @@ const AppRoot = props => {
 
     // if already logged in, recall login incase data has changed and existing data is stale 
     if ( loggedIn && user) {
-      fetchInitialData(user);
+      fetchInitialData(cookie);
     }
   }, [addPersistor, dataLoaded, fetchInitialData, loggedIn, persistor, user]);
+
 
   return (
     <NavigationContainer theme={theme}>

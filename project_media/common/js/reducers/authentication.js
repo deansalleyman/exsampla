@@ -40,7 +40,7 @@ const authentication = (state = initialState, action) => {
         fetchRemoteFailureError: false,
         user: undefined
       };
-    case appConstants.PURGE:
+    case appConstants.PURGE_DATA:
       // Reset the app state to begining
       return {
         loggingIn: false,

@@ -2,7 +2,7 @@ import {appConstants} from '../constants';
 
 import {loadState} from '../localStorage';
 
-const initialState = {currentResearchPage: 1};
+const initialState = {currentResearchPage: null};
 
 const appData = (state = initialState, action) => {
   switch (action.type) {
@@ -20,10 +20,10 @@ const appData = (state = initialState, action) => {
       return Object.assign({}, state, {
         persistor: action.persistor
       });
-    case appConstants.PURGE:
+    case appConstants.PURGE_DATA:
       // Reset the app state to begining
       return {
-        currentResearchPage: 1
+        currentResearchPage: null
       };
 
     default:

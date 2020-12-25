@@ -32,4 +32,12 @@ export const logOutEpic = (action$, state$) =>
 
     })
   )
+  export const loginFailureEpic = (action$, state$) =>
+  action$.pipe(
+    filter(action => action.type === userConstants.LOGIN_FAILURE),
+    tap(() => state$.value.appData.persistor.purge()),
+    ignoreElements()
+  )
+
+ 
 

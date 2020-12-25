@@ -81,7 +81,7 @@ const research = (state = initialState, action) => {
       });
 
 
-    case appConstants.PURGE:
+    case appConstants.PURGE_DATA:
       // Reset the app state to begining
       return {
         answerSet: {},

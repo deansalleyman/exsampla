@@ -33,7 +33,7 @@ const settings = {
   },
   auth: {
     use: true,
-    authPassword: false,
+    authPassword: true,
     usernameText: 'Email',
     continueText: 'Next',
     validatedEmail: true,

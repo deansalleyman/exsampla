@@ -38,7 +38,7 @@ const notifications = (state = initialState, action) => {
       return Object.assign({}, state, {
         userPermissionsResponse: action.payload
       })
-    case appConstants.PURGE:
+    case appConstants.PURGE_DATA:
       // Reset the app state to begining
       return {
         scheduleRunning: false,
