@@ -93,8 +93,8 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    fetchInitialData: (cookie) => {
-      dispatch(researchActions.fetchInitialData(cookie))
+    fetchInitialData: (user, cookie) => {
+      dispatch(researchActions.fetchInitialData(user, cookie))
     },
     initiateSchedule: (startStop = false) => {
       dispatch(notificationActions.initiateSchedule(startStop))
@@ -135,7 +135,6 @@ const AppRoot = props => {
   } = props;
   const {header = {}, pageTitles = {}, theme = MyTheme, debug = {} } = settings
 
-  console.log('app',isFetching ,dataLoaded , loggedIn)
 
 
   useEffect(() => {
@@ -158,10 +157,10 @@ const AppRoot = props => {
     // then show loading screen whilst we fetch data
 
     // if already logged in, recall login incase data has changed and existing data is stale 
-    if ( loggedIn && user) {
-      fetchInitialData(cookie);
+    if ( loggedIn && user && cookie) {
+      fetchInitialData(user, cookie);
     }
-  }, [addPersistor, dataLoaded, fetchInitialData, loggedIn, persistor, user]);
+  }, [addPersistor, dataLoaded, fetchInitialData, loggedIn, persistor, user, cookie]);
 
 
   return (
@@ -174,7 +173,7 @@ const AppRoot = props => {
             name={pageTitles.loading}
             component={AuthLoadingScreenContainer}
           />
-        ) : !loggedIn ? (
+        ) : (!loggedIn || !user || !cookie ) ? (
           // No token found, user isn't signed in
           <Stack.Screen
             name="SignIn"

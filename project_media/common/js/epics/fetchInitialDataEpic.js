@@ -216,36 +216,35 @@ const fetchInitialDataEpic = ( action$ , state$ ) => action$.pipe(
           mergeMap(response => {
 
             const {initialData:{ data: {meta:{undefined:{version}={}}={}}={} }={}}= state$.value;
+            const {authentication:{ cookie:origCookie}={}}= state$.value;
             const {response:{Item:{meta:{version:incomingVersion}={}}={}}={}} = response;
-            const {user} = loginOptions;
-
-            console.log('response', response)
+            const {username} = loginOptions;
 
 
-            if (version != incomingVersion){
+
+            // ensure that we always have a cookie set , otherwise only run through bootstrap if the survey version has changed
+            if ((version != incomingVersion) || !origCookie){
 
          
 
-              if (incomingVersion){
+              if (incomingVersion || !origCookie){
                 const normalizedData = normalize(response.response, returnedData);
 
       
     
 
                 const {entities: intialdataObj={}} = normalizedData;
-                const {result:{cookie=''}} = normalizedData;
-                
-              
+                const {result:{Item:{cookie}}={}} = normalizedData;
+         
                 // change to logged in user action
                 if(!isEmpty(intialdataObj)){
 
                   return of(
-                    userActions.failure(true,'Login Failed')
-                    // setInitialData(intialdataObj), 
-                    // userActions.success(user, cookie),
-                    // appActions.currentResearchPage(1),
-                    // notificationActions.cancelSchedule(),
-                    // notificationActions.initiateSchedule(true)
+                    setInitialData(intialdataObj), 
+                    userActions.success(username, cookie),
+                    appActions.currentResearchPage(1),
+                    notificationActions.cancelSchedule(),
+                    notificationActions.initiateSchedule(true)
                   );
                 } else {
 

@@ -7,8 +7,9 @@ import {
 } from '../constants';
 
 
-const fetchInitialData = cookie => ({
+const fetchInitialData = (user, cookie) => ({
   type: dataConstants.FETCH_INITIAL_DATA,
+  user,
   cookie
 })
 
@@ -33,7 +34,6 @@ const logOut = () => ({
   type: userConstants.LOGOUT
 })
 
-const request = user => ({type: userConstants.LOGIN_REQUEST, user});
 const success = (user, cookie) => ({
   type: userConstants.LOGIN_SUCCESS,
   user,
@@ -47,7 +47,6 @@ const failure = (error, payload) => ({
 
 export const userActions = {
   loginUser,
-  request,
   success,
   failure,
   logOut

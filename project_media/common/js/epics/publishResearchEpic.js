@@ -18,7 +18,7 @@ const publishResearchEpic = ( action$ , state$ ) => action$.pipe(
     return from(Object.keys(sessionKeys))
   }),
   mergeMap(session => {
-      const {authentication:{user}} = state$.value;
+      const {authentication:{user, cookie}} = state$.value;
       const {research:{answerSet}} = state$.value;
       const {initialData:{ data: {meta:{undefined:{version}={}}={}}={} }={}}= state$.value;
 
@@ -33,8 +33,10 @@ const publishResearchEpic = ( action$ , state$ ) => action$.pipe(
       const postVars = {
         id: session,
         username: user,
+        cookie: cookie,
         data: JSON.stringify(dataSet)
       };
+
 
 
       const postOptions = {
