@@ -32,6 +32,7 @@ function mapStateToProps(state) {
   const {currentResearchPage} = state.appData;
 
   const pageData = getPageById(state, currentResearchPage);
+  console.log('pageData', pageData)
 
   return {
     startPage,

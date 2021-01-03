@@ -215,17 +215,18 @@ const fetchInitialDataEpic = ( action$ , state$ ) => action$.pipe(
         return ajax(postOptions).pipe(
           mergeMap(response => {
 
+        
+
             const {initialData:{ data: {meta:{undefined:{version}={}}={}}={} }={}}= state$.value;
             const {authentication:{ cookie:origCookie}={}}= state$.value;
             const {response:{Item:{meta:{version:incomingVersion}={}}={}}={}} = response;
             const {username} = loginOptions;
 
 
-
             // ensure that we always have a cookie set , otherwise only run through bootstrap if the survey version has changed
             if ((version != incomingVersion) || !origCookie){
 
-         
+ 
 
               if (incomingVersion || !origCookie){
                 const normalizedData = normalize(response.response, returnedData);

@@ -42,6 +42,7 @@ export default function ResearchScreen(props) {
 
   useEffect(() => {
     const {currentResearchPage} = props
+
     const PageTitle = pageTitles[currentResearchPage]
       ? pageTitles[currentResearchPage]
       : pageTitles['session']
