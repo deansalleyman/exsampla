@@ -7,7 +7,6 @@ const initialState = {currentResearchPage: 1};
 const appData = (state = initialState, action) => {
   switch (action.type) {
     case appConstants.CURRENT_RESEARCH_PAGE:
-      console.log('appConstants.CURRENT_RESEARCH_PAGE called', action)
       return Object.assign({}, state, {
         currentResearchPage: action.id
       });
