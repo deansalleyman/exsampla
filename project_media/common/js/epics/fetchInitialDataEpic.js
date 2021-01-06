@@ -241,11 +241,12 @@ const fetchInitialDataEpic = ( action$ , state$ ) => action$.pipe(
                 if(!isEmpty(intialdataObj)){
 
                   return of(
-                    setInitialData(intialdataObj), 
-                    userActions.success(username, cookie),
-                    appActions.currentResearchPage(1),
                     notificationActions.cancelSchedule(),
-                    notificationActions.initiateSchedule(true)
+                    setInitialData(intialdataObj),
+                    notificationActions.initiateSchedule(true),
+                    userActions.success(username, cookie),
+                    appActions.currentResearchPage(1)
+                    
                   );
                 } else {
 

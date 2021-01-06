@@ -1,4 +1,3 @@
-import {setInitialData, fetchInitialData} from '../actions';
 import {dataConstants, appConstants} from '../constants';
 
 import {loadState} from '../localStorage';

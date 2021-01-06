@@ -112,6 +112,7 @@ export default class NotificationService {
     PushNotification.cancelLocalNotifications({id: '' + id});
   }
   cancelAll() {
+
     PushNotification.cancelAllLocalNotifications()
 
     try {
