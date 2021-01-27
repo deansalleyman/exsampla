@@ -25,7 +25,6 @@ const notificationHandleEpic = ( action$ , state$ ) => action$.pipe(
 
       return of(
         appActions.currentResearchPage(alertPage), 
-        notificationActions.cancelLocalNotification(id),
         researchActions.setSessionId(session,timeslot)
       );
     })
