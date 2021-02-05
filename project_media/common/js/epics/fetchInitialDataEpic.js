@@ -236,6 +236,9 @@ const fetchInitialDataEpic = ( action$ , state$ ) => action$.pipe(
 
                 const {entities: intialdataObj={}} = normalizedData;
                 const {result:{Item:{cookie}}={}} = normalizedData;
+
+                const { data: {meta:{undefined:{start_page='1', alert_page='100'}={}}={}}={} }= intialdataObj;
+                const startPage = parseInt(start_page,10);
          
                 // change to logged in user action
                 if(!isEmpty(intialdataObj)){
@@ -245,7 +248,7 @@ const fetchInitialDataEpic = ( action$ , state$ ) => action$.pipe(
                     setInitialData(intialdataObj),
                     notificationActions.initiateSchedule(true),
                     userActions.success(username, cookie),
-                    appActions.currentResearchPage(1)
+                    appActions.currentResearchPage(startPage)
                     
                   );
                 } else {

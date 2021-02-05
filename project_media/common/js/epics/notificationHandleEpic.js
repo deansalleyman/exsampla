@@ -5,14 +5,27 @@ import { ajax } from 'rxjs/ajax';
 import {notificationActions, appActions, researchActions} from '../actions/';
 import { notificationConstants } from '../constants';
 import keys from 'lodash/keys';
+import isArray from 'lodash/isArray'
 import isUndefined from 'lodash/isUndefined';
 import settings from '../../../../config/settings';
 
 
 const notificationHandleEpic = ( action$ , state$ ) => action$.pipe(
     filter(action => action.type === notificationConstants.NOTIFICATION_ACTIONED),
-    withLatestFrom(state$),
-    mergeMap(([action, state]) => {
+    mergeMap((response) => {
+      let action =  {};
+      let state =  state$.value;
+
+
+      if(isArray(response)){
+      const action = response[0] || {};
+      } else {
+        action = response
+      }
+
+      console.log('notificationHandleEpic', response, state$,'parsed:', action, state)
+
+
 
       const {initialData:{ data: {meta:{undefined:{start_page='1', alert_page='100'}={}}={}}={} }={}}= state;
       const {id} = action.payload;

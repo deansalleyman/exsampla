@@ -8,7 +8,7 @@ const appData = (state = initialState, action) => {
   switch (action.type) {
     case appConstants.CURRENT_RESEARCH_PAGE:
       return Object.assign({}, state, {
-        currentResearchPage: action.id
+        currentResearchPage: parseInt(action.id,10)
       });
     case appConstants.CLOSE:
       // Reset the app state to begining

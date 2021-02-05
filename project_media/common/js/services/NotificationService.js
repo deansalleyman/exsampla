@@ -9,6 +9,8 @@ export default class NotificationService {
     this.configure(onRegister, onNotification)
     this.lastId = 0;
 
+    console.log('NotificationService INI')
+
     this.init();
   }
 
@@ -21,6 +23,24 @@ export default class NotificationService {
       },
       (created) => console.log(`createChannel returned '${created}'`) // (optional) callback returns whether the channel was created, false means it already existed.
     );
+
+    PushNotificationIOS.setNotificationCategories([
+      {
+        id: 'userAction',
+        actions: [
+          {
+            id: 'dismiss',
+            title: 'Dismiss',
+            options: { foreground: true }
+          },
+          {
+            id: 'snooz',
+            title: 'Snooz',
+            options: { foreground: true },
+          },
+        ],
+      },
+    ]);
   
   }
 
@@ -28,6 +48,7 @@ export default class NotificationService {
     PushNotification.configure({
       onRegister: onRegister,
       onNotification: function(notification) {
+        console.log('onNotification about to trigger', notification)
 
         if (typeof onNotification == 'function') {
           onNotification(notification)
@@ -71,7 +92,7 @@ export default class NotificationService {
    * @param {Data} date : default //30 seconds
    */
   scheduleNotification({
-    date = new Date(Date.now() + (30 * 1000)),
+    date = new Date(Date.now() + (3 * 1000)),
     title = "Scheduled Notification",
     message = "My Notification Message",
     playSound = true,

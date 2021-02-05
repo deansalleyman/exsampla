@@ -47,7 +47,11 @@ import rootEpic from './project_media/common/js/epics';
 import {createEpicMiddleware} from 'redux-observable';
 import {logger} from 'redux-logger';
 
+
+
 const epicMiddleware = createEpicMiddleware();
+
+console.log('App INI')
 
 const middlewares = [epicMiddleware];
 
