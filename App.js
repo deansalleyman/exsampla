@@ -51,8 +51,6 @@ import {logger} from 'redux-logger';
 
 const epicMiddleware = createEpicMiddleware();
 
-console.log('App INI')
-
 const middlewares = [epicMiddleware];
 
 if (process.env.NODE_ENV === 'development') {

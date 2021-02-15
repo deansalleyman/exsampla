@@ -1,6 +1,7 @@
 import PushNotification from 'react-native-push-notification'
 import PushNotificationIOS from '@react-native-community/push-notification-ios';
 import { initial } from 'lodash';
+import {AppState} from 'react-native';
 
 export default class NotificationService {
   //onNotificaitn is a function passed in that is to be called when a
@@ -8,8 +9,8 @@ export default class NotificationService {
   constructor(onRegister, onNotification) {
     this.configure(onRegister, onNotification)
     this.lastId = 0;
+    this.backgroundNotification;
 
-    console.log('NotificationService INI')
 
     this.init();
   }
@@ -41,6 +42,8 @@ export default class NotificationService {
         ],
       },
     ]);
+
+
   
   }
 
@@ -48,7 +51,7 @@ export default class NotificationService {
     PushNotification.configure({
       onRegister: onRegister,
       onNotification: function(notification) {
-        console.log('onNotification about to trigger', notification)
+
 
         if (typeof onNotification == 'function') {
           onNotification(notification)
@@ -65,13 +68,17 @@ export default class NotificationService {
         sound: true,
       },
 
-      popInitialNotification: true,
+      popInitialNotification: false,
       requestPermissions: Platform.OS === 'ios',
       allowWhileIdle: true,
       /* iOS and Android properties */
       title: 'My Notification Title A', // (optional)
       message: 'My Notification Message A', // (required)
     })
+
+    PushNotification.popInitialNotification((notification) => {
+      onNotification(notification);
+    });
   }
 
   //Appears right away
@@ -139,7 +146,7 @@ export default class NotificationService {
     try {
       
       PushNotification.removeAllDeliveredNotifications();
-      PushNotificationIOS.cancelLocalNotifications();
+      PushNotificationIOS.removeAllPendingNotificationRequests();
     } catch (error) {}
   }
 
@@ -154,7 +161,7 @@ export default class NotificationService {
 
   getScheduledLocalNotifications(callback) {
     try {
-      PushNotificationIOS.getScheduledLocalNotifications(callback)
+      PushNotificationIOS.getPendingNotificationRequests(callback)
     } catch (error) {
       callback([])
     }

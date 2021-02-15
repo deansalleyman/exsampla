@@ -1,49 +1,18 @@
-import { filter, mapTo, mergeMap, tap, switchMap,catchError, map,ignoreElements } from 'rxjs/operators';
+import { filter, mapTo, mergeMap, tap, switchMap,catchError, map,ignoreElements, take } from 'rxjs/operators';
 import { ofType } from 'redux-observable';
-import { of , from, BehaviorSubject, Subject} from 'rxjs'
+import { of , from, BehaviorSubject, Subject, combineLatest} from 'rxjs'
 import { ajax } from 'rxjs/ajax';
 import {notificationActions} from '../actions/';
 import { notificationConstants, appConstants, userConstants } from '../constants';
 import keys from 'lodash/keys';
 import isUndefined from 'lodash/isUndefined';
 import settings from '../../../../config/settings';
-import {AppState} from 'react-native';
-
 import NotificationService from '../services/NotificationService';
 
-
-function appOpenedByNotificationTap(notification) {
-  // This is your handler. The tapped notification gets passed in here.
-  // Do whatever you like with it.
-  console.log('appOpenedByNotificationTap',notification);
-}
-
-// PushNotificationIOS.getInitialNotification().then(function (notification) {
-//   if (notification != null) {
-//     appOpenedByNotificationTap(notification);
-//   }
-// });
-
-let backgroundNotification;
-
-// PushNotificationIOS.addEventListener('notification', function (notification) {
-//   if (AppState.currentState === 'background') {
-//     backgroundNotification = notification;
-//   }
-// });
-
-AppState.addEventListener('change', function (new_state) {
-  console.log('AppState.addEventListener', new_state)
-  if (new_state === 'active' && backgroundNotification != null) {
-    appOpenedByNotificationTap(backgroundNotification);
-    backgroundNotification = null;
-  }
-});
 
 
 // Called when a remote or local notification is opened or received
 const onNotification = (notif) => {
-
 
   onNotificationFn$.next(notif);
 }
@@ -107,12 +76,9 @@ export const cancelLocalNotificationIdEpic = ( action$ , state$ ) => action$.pip
 }
  */
 
-export const notificationActionedEpic = ( action$ , state$ ) => onNotificationFn$.pipe(
-  tap((ret)=> {
-     console.log('notificationActionedEpic', ret)
-
-  }),
-  map(notificationActions.notificationActioned)
+export const notificationActionedEpic = ( action$ , state$ ) => combineLatest([onNotificationFn$, action$.ofType('persist/REHYDRATE').pipe(take(1))]).pipe(
+  filter(([notificationRet,storeRehydrated])=>notificationRet), //only send on if there is an action on notfication click
+  map(([notificationRet,storeRehydrated])=> notificationActions.notificationActioned(notificationRet))
 )
 
 

@@ -5622,10 +5622,10 @@ react-native-iphone-x-helper@^1.2.1:
   resolved "https://registry.yarnpkg.com/react-native-iphone-x-helper/-/react-native-iphone-x-helper-1.2.1.tgz#645e2ffbbb49e80844bb4cbbe34a126fda1e6772"
   integrity sha512-/VbpIEp8tSNNHIvstuA3Swx610whci1Zpc9mqNkqn14DkMbw+ORviln2u0XyHG1kPvvwTNGZY6QpeFwxYaSdbQ==
 
-react-native-push-notification@7.2.0:
-  version "7.2.0"
-  resolved "https://registry.yarnpkg.com/react-native-push-notification/-/react-native-push-notification-7.2.0.tgz#f8c12896159bab91266332f8928679544a9463d4"
-  integrity sha512-MRyuRJrnYCK1qrSwSaUKRrlDgYQZLlnvnzOIPtAGOWpuOnUeGMX5ClnTPfU4gGqyJn5DyQFwD3WVRPUHJxT4Fw==
+react-native-push-notification@7.2.1:
+  version "7.2.1"
+  resolved "https://registry.yarnpkg.com/react-native-push-notification/-/react-native-push-notification-7.2.1.tgz#f532afa281601d33ebb5784e7078bedb8cc43352"
+  integrity sha512-LeMTXkIyMwoAXre98wujOqjEKN8U803z5EEc12C+sI9MoM3DQPpJJOXSVewodv1uICUsFae4N+CLHwlFw68afg==
 
 react-native-ratings@^7.2.0:
   version "7.2.0"
