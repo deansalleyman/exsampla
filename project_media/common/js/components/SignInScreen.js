@@ -134,6 +134,8 @@ export default function auth(props) {
               value={credentials.username}
               errorStyle={{ color: 'red' }}
               errorMessage={emailErrorMsg}
+              textContentType="username"
+              autoCapitalize="none"
 
             ></Input>
             {auth.authPassword  &&
@@ -144,6 +146,8 @@ export default function auth(props) {
                 value={credentials.password}
                 errorStyle={{ color: 'red' }}
                 errorMessage={passwordErrorMsg}
+                textContentType="password"
+                autoCapitalize="none"
               ></Input>
             }
 

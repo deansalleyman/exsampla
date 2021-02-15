@@ -23,8 +23,6 @@ const notificationHandleEpic = ( action$ , state$ ) => action$.pipe(
         action = response
       }
 
-      console.log('notificationHandleEpic', response, state$,'parsed:', action, state)
-
 
 
       const {initialData:{ data: {meta:{undefined:{start_page='1', alert_page='100'}={}}={}}={} }={}}= state;
@@ -37,7 +35,8 @@ const notificationHandleEpic = ( action$ , state$ ) => action$.pipe(
       const session = Date.now().toString();
 
       return of(
-        appActions.currentResearchPage(alertPage), 
+        appActions.currentResearchPage(alertPage),
+        notificationActions.cancelLocalNotification(id),
         researchActions.setSessionId(session,timeslot)
       );
     })

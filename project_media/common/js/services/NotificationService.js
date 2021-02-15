@@ -141,27 +141,22 @@ export default class NotificationService {
   }
   cancelAll() {
 
-    PushNotification.cancelAllLocalNotifications()
+    PushNotification.cancelAllLocalNotifications();
 
-    try {
-      
-      PushNotification.removeAllDeliveredNotifications();
-      PushNotificationIOS.removeAllPendingNotificationRequests();
-    } catch (error) {}
   }
 
   clearActioned(id) {
+    if(id){
+      PushNotification.cancelLocalNotifications({id: id});
+    }
 
-    PushNotification.cancelLocalNotifications({id: id});
-    try {
-      PushNotificationIOS.removeAllDeliveredNotifications();
-      PushNotificationIOS.removeAllPendingNotificationRequests();
-    } catch (error) {}
+    PushNotification.removeAllDeliveredNotifications();
+
   }
 
   getScheduledLocalNotifications(callback) {
     try {
-      PushNotificationIOS.getPendingNotificationRequests(callback)
+      PushNotification.getScheduledLocalNotifications(callback)
     } catch (error) {
       callback([])
     }
