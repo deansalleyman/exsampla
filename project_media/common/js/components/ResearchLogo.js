@@ -1,14 +1,14 @@
 
 import React, { useContext, useState, useEffect } from 'react';
-// import { View, Text, Button, Image } from 'react-native';
 import { View, ActivityIndicator } from 'react-native';
 import { Image } from 'react-native-elements';
 import ConfigContext from '../contexts/configContext';
 
 import PropTypes from 'prop-types';
-export default function ResearchLogo({dataObject = {}, imageAssetsUrl=''}) {
+export default function ResearchLogo({dataObject = {}, imageAssetsUrl}) {
 
   const logoUrl = `${imageAssetsUrl}/${dataObject.logo}`;
+
     return ( 
     <Image
       containerStyle={{}}
