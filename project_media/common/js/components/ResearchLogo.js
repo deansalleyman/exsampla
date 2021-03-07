@@ -6,14 +6,14 @@ import { Image } from 'react-native-elements';
 import ConfigContext from '../contexts/configContext';
 
 import PropTypes from 'prop-types';
-export default function ResearchLogo({dataObject = {}, settings}) {
+export default function ResearchLogo({dataObject = {}, imageAssetsUrl=''}) {
 
-    const {imageAssetsUrl} = settings;
+  const logoUrl = `${imageAssetsUrl}/${dataObject.logo}`;
     return ( 
     <Image
       containerStyle={{}}
         style={{ aspectRatio: 1,height:120}}
-        source={{uri: imageAssetsUrl + dataObject.logo}}
+        source={{uri: logoUrl}}
         PlaceholderContent={<ActivityIndicator/>}
       />
 

@@ -19,7 +19,7 @@ function mapStateToProps(state) {
       data: {
         pageElements = {},
         scripts,
-        meta: {undefined: {start_page = '1', alert_page = '100'} = {}} = {},
+        meta: {undefined: {start_page = '1', alert_page = '100', imageAssetsUrl} = {}} = {},
       } = {},
     } = {},
   } = state;
@@ -40,7 +40,8 @@ function mapStateToProps(state) {
     currentResearchPage,
     pageData,
     pagesArray: Object.keys(pageElements),
-    scripts
+    scripts,
+    imageAssetsUrl
   };
 }
 

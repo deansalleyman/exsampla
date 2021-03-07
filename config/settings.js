@@ -56,7 +56,6 @@ const settings = {
     },
     resetText: 'Reset Survey'
   },
-  imageAssetsUrl: 'https://leanos.app/RT/images/',
   api: 'https://6huz9t7lo2.execute-api.eu-west-2.amazonaws.com/Prod/',
   pageTitles: {
     loading: 'LOADING',

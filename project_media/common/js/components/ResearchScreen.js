@@ -37,7 +37,8 @@ export default function ResearchScreen(props) {
     scriptCommand,
     onLogOut,
     startPage,
-    alertPage
+    alertPage,
+    imageAssetsUrl
   } = props
 
   useEffect(() => {
@@ -173,8 +174,8 @@ export default function ResearchScreen(props) {
 
   return (
     <View style={viewContainer.style}>
-      {pageData && pageData.logo && (
-        <ResearchLogo dataObject={pageData.logo} settings={settings} />
+      {pageData && pageData.logo && imageAssetsUrl && (
+        <ResearchLogo dataObject={pageData.logo} imageAssetsUrl={imageAssetsUrl} />
       )}
 
       {pageData && pageData.title && (
