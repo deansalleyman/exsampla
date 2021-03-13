@@ -24,24 +24,29 @@ export default class NotificationService {
       },
       (created) => console.log(`createChannel returned '${created}'`) // (optional) callback returns whether the channel was created, false means it already existed.
     );
+try {
+  PushNotificationIOS.setNotificationCategories([
+    {
+      id: 'userAction',
+      actions: [
+        {
+          id: 'dismiss',
+          title: 'Dismiss',
+          options: { foreground: true }
+        },
+        {
+          id: 'snooz',
+          title: 'Snooz',
+          options: { foreground: true },
+        },
+      ],
+    },
+  ]);
+  
+} catch (error) {
+  
+}
 
-    PushNotificationIOS.setNotificationCategories([
-      {
-        id: 'userAction',
-        actions: [
-          {
-            id: 'dismiss',
-            title: 'Dismiss',
-            options: { foreground: true }
-          },
-          {
-            id: 'snooz',
-            title: 'Snooz',
-            options: { foreground: true },
-          },
-        ],
-      },
-    ]);
 
 
   
