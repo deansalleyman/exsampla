@@ -24,22 +24,16 @@ function mapStateToProps(state) {
     } = {},
   } = state;
 
-  const startPage = parseInt(start_page, 10);
-  const alertPage = parseInt(alert_page, 10);
 
-  const {loginFailureReason} = state.authentication;
-  const {data, fetchRemoteFailureReason} = state.initialData;
+
   const {currentResearchPage} = state.appData;
 
   const pageData = getPageById(state, currentResearchPage);
 
 
   return {
-    startPage,
-    alertPage,
     currentResearchPage,
     pageData,
-    pagesArray: Object.keys(pageElements),
     scripts,
     imageAssetsUrl
   };
@@ -47,23 +41,11 @@ function mapStateToProps(state) {
 
 const mapDispatchToProps = dispatch => {
   return {
-    onLoginUser: (username, cookie) => {
-      dispatch(userActions.loginUser(username, cookie))
-    },
     navigateNext: id => {
       dispatch(appActions.currentResearchPage(id))
     },
-    addAnswer: (answer, id) => {
-      dispatch(researchActions.addAnswer(answer, id))
-    },
-    completeResearch: payload => {
-      dispatch(researchActions.completeResearch(payload))
-    },
     scriptCommand: payload => {
       dispatch(researchActions.scriptCommand(payload))
-    },
-    onLogOut: () => {
-      dispatch(userActions.logOut())
     }
   }
 }

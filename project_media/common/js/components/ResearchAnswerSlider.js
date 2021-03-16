@@ -5,6 +5,7 @@ import { Slider } from 'react-native-elements';
 import toNumber from 'lodash/toNumber';
 
 import indexOf from 'lodash/indexOf';
+import debounce from 'lodash/debounce';
 import ConfigContext from '../contexts/configContext';
 
 
@@ -42,7 +43,7 @@ export default function ResearchAnswerSlider({ dataObject, handleAnswer}) {
   const labelsC = [...labels]
   const labelsReversed = [...labelsC.reverse()];
 
-
+  const bouncedFn =  debounce(() => handleAnswer(answer), 1000)
 
   useEffect(() => {
  
@@ -53,7 +54,7 @@ export default function ResearchAnswerSlider({ dataObject, handleAnswer}) {
   },[variable]);
 
   useEffect(() => {
- 
+
 
     const output = numberRangeArray.reduce((prev, curr) => {
       return (Math.abs(curr - answer) < Math.abs(prev - answer) ? curr : prev)
@@ -61,7 +62,7 @@ export default function ResearchAnswerSlider({ dataObject, handleAnswer}) {
     const theLabelIndex = labelsReversed[indexOf(numberRangeArray, output)]
 
     setLabelSelected(theLabelIndex);
-
+    bouncedFn();
 
   },[answer,variable]);
 
@@ -99,9 +100,10 @@ export default function ResearchAnswerSlider({ dataObject, handleAnswer}) {
 
           <Slider
             minimumTrackTintColor={minimumTrackTintColor}
-            thumbImage={require('./img/thumb.png')}
+ 
             thumbStyle={sliderStyles.thumb}
             thumbTintColor={thumbTintColor}
+
 
             minimumValue={minimumValue}
             step={toNumber(steps)}
@@ -111,7 +113,7 @@ export default function ResearchAnswerSlider({ dataObject, handleAnswer}) {
             onValueChange={value => {
               setAnswer(Math.round((maximumValue - value)))}
             }
-            onSlidingComplete={value => handleAnswer(answer)}
+        
           />
    
         <View style={{flex: 0.5}} >

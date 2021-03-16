@@ -29,15 +29,10 @@ export default function ResearchScreen(props) {
 
   const {
     navigation,
-    pageData,
+    pageData = {},
     scripts,
     navigateNext,
-    pagesArray,
-    addAnswer,
     scriptCommand,
-    onLogOut,
-    startPage,
-    alertPage,
     imageAssetsUrl
   } = props
 
@@ -182,7 +177,7 @@ export default function ResearchScreen(props) {
         <ResearchTitle dataObject={pageData.title} />
       )}
 
-      {pageData && pageData.v_slider && (
+      {pageData.v_slider && (
         <ResearchAnswerSlider
           dataObject={pageData.v_slider}
           handleAnswer={setAnswer}
