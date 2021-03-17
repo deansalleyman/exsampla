@@ -10,7 +10,7 @@ function getPageById(state, id) {
     },
   } = state;
 
-  const pagedata = elements['page_' + id] || {}
+  const pagedata = Object.assign({},elements['page_' + id]);
   return pagedata;
 }
 function mapStateToProps(state) {

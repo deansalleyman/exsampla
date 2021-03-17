@@ -8,8 +8,7 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 export default function SelectorButtons({ dataObject =[],setForkGoto, handleAnswer}) {
 
-    const {selector} = dataObject;
-
+   
 
     const settings = useContext(ConfigContext);
     const {selectorButtonsConfig={}} = settings; 

@@ -44,9 +44,12 @@ export default function ResearchScreen(props) {
       : pageTitles['session']
 
     changeThisTitle(PageTitle);
+
+
   }, [props.currentResearchPage])
 
-  const [answer, setAnswer] = useState()
+  //const [answer, setAnswer] = useState({})
+  let answer = {};
   const [forkGoto, setForkGoto] = useState()
 
   changeThisTitle = titleText => {
@@ -133,10 +136,10 @@ export default function ResearchScreen(props) {
           theTarget[valueKey] = parsed[lookUpkey]
         }
 
-        if (theKey == 'save' && !isUndefined(answer)) {
-          theTarget.answer = answer
+        if (theKey == 'save' && !isUndefined(answer.a)) {
+          theTarget.answer = answer.a;
           // reset answer
-          setAnswer(undefined);
+          answer={};
         }
 
         if (lookUpkey == 'goto' && !isUndefined(forkGoto)) {
@@ -169,48 +172,48 @@ export default function ResearchScreen(props) {
 
   return (
     <View style={viewContainer.style}>
-      {pageData && pageData.logo && imageAssetsUrl && (
+      {pageData.logo && imageAssetsUrl && (
         <ResearchLogo dataObject={pageData.logo} imageAssetsUrl={imageAssetsUrl} />
       )}
 
-      {pageData && pageData.title && (
+      {pageData.title && (
         <ResearchTitle dataObject={pageData.title} />
       )}
 
       {pageData.v_slider && (
         <ResearchAnswerSlider
           dataObject={pageData.v_slider}
-          handleAnswer={setAnswer}
+          handleAnswer={(val) => answer.a = val}
         />
       )}
 
-      {pageData && pageData.text && (
+      {pageData.text && (
         <ResearchAnswerText
           dataObject={pageData.text}
-          handleAnswer={setAnswer}
+          handleAnswer={(val) => answer.a = val}
         />
       )}
 
-      {pageData && pageData.selector && (
+      {pageData.selector && (
         <SelectorButtons
           dataObject={pageData.selector}
           setForkGoto={setForkGoto}
-          handleAnswer={setAnswer}
+          handleAnswer={(val) => answer.a = val}
         />
       )}
 
-      {pageData && pageData.link && (
+      {pageData.link && (
         <ResearchLink dataObject={pageData.link} handleLink={handleLink} />
       )}
 
 
-      {pageData && pageData.button && (
+      {pageData.button && (
         <ResearchButton
           dataObject={pageData.button}
           handleScript={handleScript}
         />
       )}
-      {pageData && pageData.button_bar && pageData.button_bar.button_bar && (
+      {pageData.button_bar && pageData.button_bar.button_bar && (
         <ResearchButtonBar
           dataObject={pageData.button_bar.button_bar}
           handleScript={handleScript}
