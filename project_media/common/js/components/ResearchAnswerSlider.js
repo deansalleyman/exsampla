@@ -7,6 +7,7 @@ import toNumber from 'lodash/toNumber';
 import indexOf from 'lodash/indexOf';
 import debounce from 'lodash/debounce';
 import ConfigContext from '../contexts/configContext';
+import  AnswerSlider  from './AnswerSlider';
 
 
 
@@ -15,7 +16,8 @@ export default function ResearchAnswerSlider({ dataObject, handleAnswer}) {
 
   const minimumValue = toNumber(min);
   const maximumValue = toNumber(max);
-  const defaultValueInt = toNumber(defaultValue);
+  let defaultValueInt = toNumber(defaultValue);
+  console.log('defaultValueInt', answer, defaultValue)
 
 
 
@@ -62,115 +64,43 @@ export default function ResearchAnswerSlider({ dataObject, handleAnswer}) {
     const theLabelIndex = labelsReversed[indexOf(numberRangeArray, output)]
 
     setLabelSelected(theLabelIndex);
+    defaultValueInt = answer;
 
 
   },[answer,variable]);
 
  const iniSlider =  (maximumValue - defaultValueInt);
 
-
-  return (
-    <View 
-    style={viewContainer} >
-    <View 
-      style={{ 
-        flex: 1 ,
-        justifyContent: 'center', 
-        margin:10,
-
-        flexDirection:'row'
-        }}>
-        <View style={{
-          flex: 0.5,
-          alignItems: 'flex-start',
-          flexDirection:'column',
-          justifyContent:'space-between',
-          paddingLeft: 10
-        }} >
-          {labels.map((label, index) => (
-            <Text 
-            key={index}
-            style={{
-              fontWeight: 'normal'
-            }}
-            >{label}</Text>
-          ))}
-        </View>
-
-
-          <Slider
-            minimumTrackTintColor={minimumTrackTintColor}
  
-            thumbStyle={sliderStyles.thumb}
-            thumbTintColor={thumbTintColor}
+ 
 
+ const onValueChange =  (val) => {
+  setAnswer(Math.round((maximumValue - val)));
 
-            minimumValue={minimumValue}
-            step={toNumber(steps)}
-            maximumValue={maximumValue}
-            value={iniSlider}
-            orientation='vertical'
-
-
-            onSlidingComplete={value => {
-              bouncedFn();
-              bouncedFnChange(value);
-            }}
-        
-          />
-   
-        <View style={{flex: 0.5}} >
-          <Text
-            style={{
-              fontWeight: 'bold',
-              fontSize: 30,
-              color: '#CCCCCC'
-            }}
-          >
-          {answer}
-          </Text>
-        </View>
-      </View>
-      <View style={{
-        borderWidth:2,
-        borderColor:'gray',
-        borderRadius:50,
-        backgroundColor:'white',
-        padding:10,
-        minHeight:20,
-      
-        margin:10}} >
-          <Text
-            style={{
-              fontWeight: 'bold',
-              fontSize: 14,
-              color: '#000000'
-            }}>
-              
-            {labelSelected}
-          </Text>
-        </View>
-
-    </View>
-    );
+  }
+ const onSlidingComplete = () => {
+  handleAnswer(answer);
   }
 
-ResearchAnswerSlider.defaultProps = {
-  v_slider:{
-    default:"1",
-    labels: [],
-    max:"1",
-    min: "0",
-    steps: "1",
-    type : "labels",
-    var:""
-  }
-}
 
-ResearchAnswerSlider.propTypes = {
-    dataObject: PropTypes.oneOfType([
-      PropTypes.object,
-      PropTypes.array
-    ])
+  const [sliderProps, setSliderProps] = useState({
+    minimumTrackTintColor:minimumTrackTintColor,
+    thumbStyle:sliderStyles.thumb,
+    thumbTintColor:thumbTintColor,
+    minimumValue:minimumValue,
+    step:toNumber(steps),
+    maximumValue:maximumValue,
+    orientation:'vertical'
+  });
+
+
+  return (<AnswerSlider 
+          {...sliderProps}
+          onValueChange={onValueChange}
+          onSlidingComplete={onSlidingComplete}
+          answer={answer}
+          labelSelected={labelSelected}
+          labels={labels}
+          iniSlider={answer}
+          />);
   }
-  
