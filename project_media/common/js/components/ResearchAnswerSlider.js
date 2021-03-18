@@ -43,9 +43,14 @@ export default function ResearchAnswerSlider({ dataObject, handleAnswer}) {
   const labelsC = [...labels]
   const labelsReversed = [...labelsC.reverse()];
 
+  const bouncedFn =  debounce(() => handleAnswer(answer), 1000);
+  const bouncedFnChange = debounce((val) =>setAnswer(Math.round((maximumValue - val))),100)
 
   useEffect(() => {
+ 
+
     setAnswer( defaultValueInt);
+
   },[variable]);
 
   useEffect(() => {
@@ -105,10 +110,12 @@ export default function ResearchAnswerSlider({ dataObject, handleAnswer}) {
             maximumValue={maximumValue}
             value={iniSlider}
             orientation='vertical'
-            onValueChange={value => {
-              setAnswer(Math.round((maximumValue - value)))}
-            }
-            onSlidingComplete={value => handleAnswer(answer)}
+
+
+            onSlidingComplete={value => {
+              bouncedFn();
+              bouncedFnChange(value);
+            }}
         
           />
    
