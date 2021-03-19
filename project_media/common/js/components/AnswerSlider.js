@@ -6,9 +6,9 @@ import ConfigContext from '../contexts/configContext';
 
 
 
-export default function AnswerSlider({ onValueChange, onSlidingComplete, answer,labelSelected,labels, iniSlider,...sliderProps }) {
+const AnswerSlider = ({ onValueChange, onSlidingComplete, answer,labelSelected,labels, iniSlider,...sliderProps }) => {
 
-
+  const {maximumValue} = sliderProps;
 
   const settings = useContext(ConfigContext);
   const {viewContainer} = settings.slider;
@@ -16,6 +16,14 @@ export default function AnswerSlider({ onValueChange, onSlidingComplete, answer,
   useEffect(() => {
     onValueChange(answer); 
   }, []);
+
+  // let labelValue = 100;
+
+  
+
+  // useEffect(() => {
+  //   labelValue = Math.round((maximumValue - answer));
+  // }, [answer]);
 
   return (
     <View 
@@ -61,7 +69,7 @@ export default function AnswerSlider({ onValueChange, onSlidingComplete, answer,
               color: '#CCCCCC'
             }}
           >
-          {answer}
+          {Math.round((maximumValue - answer))}
           </Text>
         </View>
       </View>
@@ -90,5 +98,5 @@ export default function AnswerSlider({ onValueChange, onSlidingComplete, answer,
   }
 
 
-
+  export default AnswerSlider
   

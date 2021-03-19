@@ -17,11 +17,9 @@ export default function ResearchAnswerSlider({ dataObject, handleAnswer}) {
   const minimumValue = toNumber(min);
   const maximumValue = toNumber(max);
   let defaultValueInt = toNumber(defaultValue);
-  console.log('defaultValueInt', answer, defaultValue)
 
-
-
-  const [answer, setAnswer] = useState(defaultValueInt);
+  // convert the default Value number into 'slider space' ( reversed )
+  const [answer, setAnswer] = useState(Math.round((maximumValue - defaultValueInt)));
   const [labelSelected, setLabelSelected] = useState('');
 
 
@@ -45,18 +43,8 @@ export default function ResearchAnswerSlider({ dataObject, handleAnswer}) {
   const labelsC = [...labels]
   const labelsReversed = [...labelsC.reverse()];
 
-  const bouncedFn =  debounce(() => handleAnswer(answer), 1000);
-  const bouncedFnChange = debounce((val) =>setAnswer(Math.round((maximumValue - val))),100)
 
   useEffect(() => {
- 
-
-    setAnswer( defaultValueInt);
-
-  },[variable]);
-
-  useEffect(() => {
-
 
     const output = numberRangeArray.reduce((prev, curr) => {
       return (Math.abs(curr - answer) < Math.abs(prev - answer) ? curr : prev)
@@ -69,17 +57,14 @@ export default function ResearchAnswerSlider({ dataObject, handleAnswer}) {
 
   },[answer,variable]);
 
- const iniSlider =  (maximumValue - defaultValueInt);
-
- 
- 
 
  const onValueChange =  (val) => {
-  setAnswer(Math.round((maximumValue - val)));
-
+  setAnswer(val)
   }
+
  const onSlidingComplete = () => {
-  handleAnswer(answer);
+  // convert the 'slider space' ( reversed ) number back into actual integer
+  handleAnswer(Math.round((maximumValue - answer)));
   }
 
 
@@ -94,6 +79,8 @@ export default function ResearchAnswerSlider({ dataObject, handleAnswer}) {
   });
 
 
+
+
   return (<AnswerSlider 
           {...sliderProps}
           onValueChange={onValueChange}
@@ -102,5 +89,6 @@ export default function ResearchAnswerSlider({ dataObject, handleAnswer}) {
           labelSelected={labelSelected}
           labels={labels}
           iniSlider={answer}
+
           />);
   }
