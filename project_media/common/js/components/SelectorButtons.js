@@ -21,7 +21,8 @@ export default function SelectorButtons({ dataObject =[],setForkGoto, handleAnsw
     }, []);
 
     function buttonSelect(index){
-      const {title, goto, value:answer} = normalizedData[index];
+
+      const {title, goto, value:answer} = normalizedData[index];  
       setForkGoto(goto);
       handleAnswer(answer);
       updateIndex(index);

@@ -48,9 +48,10 @@ export default function ResearchScreen(props) {
 
   }, [props.currentResearchPage])
 
-  //const [answer, setAnswer] = useState({})
-  let answer = {};
-  const [forkGoto, setForkGoto] = useState()
+
+  const [forkGoto, setForkGoto] = useState();
+  const [answer, setAnswer] = useState({})
+
 
   changeThisTitle = titleText => {
     navigation.setOptions({title: titleText})
@@ -139,7 +140,8 @@ export default function ResearchScreen(props) {
         if (theKey == 'save' && !isUndefined(answer.a)) {
           theTarget.answer = answer.a;
           // reset answer
-          answer={};
+          setAnswer({});
+          //answer={};
         }
 
         if (lookUpkey == 'goto' && !isUndefined(forkGoto)) {
@@ -183,14 +185,14 @@ export default function ResearchScreen(props) {
       {pageData.v_slider && (
         <ResearchAnswerSlider
           dataObject={pageData.v_slider}
-          handleAnswer={(val) => answer.a = val}
+          handleAnswer={(val) => setAnswer({a:val})}
         />
       )}
 
       {pageData.text && (
         <ResearchAnswerText
           dataObject={pageData.text}
-          handleAnswer={(val) => answer.a = val}
+          handleAnswer={(val) => setAnswer({a:val})}
         />
       )}
 
@@ -198,7 +200,7 @@ export default function ResearchScreen(props) {
         <SelectorButtons
           dataObject={pageData.selector}
           setForkGoto={setForkGoto}
-          handleAnswer={(val) => answer.a = val}
+          handleAnswer={(val) => setAnswer({a:val})}
         />
       )}
 
@@ -210,13 +212,17 @@ export default function ResearchScreen(props) {
       {pageData.button && (
         <ResearchButton
           dataObject={pageData.button}
-          handleScript={handleScript}
+          handleScript={(value, e)=> {
+            handleScript(value, e)
+          }}
         />
       )}
       {pageData.button_bar && pageData.button_bar.button_bar && (
         <ResearchButtonBar
           dataObject={pageData.button_bar.button_bar}
-          handleScript={handleScript}
+          handleScript={(value, e)=> {
+            handleScript(value, e)
+          }}
         />
       )}
 
