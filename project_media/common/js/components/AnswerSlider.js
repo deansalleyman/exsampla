@@ -17,13 +17,6 @@ const AnswerSlider = ({ onValueChange, onSlidingComplete, answer,labelSelected,l
     onValueChange(answer); 
   }, []);
 
-  // let labelValue = 100;
-
-  
-
-  // useEffect(() => {
-  //   labelValue = Math.round((maximumValue - answer));
-  // }, [answer]);
 
   return (
     <View 

@@ -45,9 +45,9 @@ export default function ResearchAnswerSlider({ dataObject, handleAnswer}) {
 
 
   useEffect(() => {
-
+    const answerNorm = Math.round((maximumValue - answer));
     const output = numberRangeArray.reduce((prev, curr) => {
-      return (Math.abs(curr - answer) < Math.abs(prev - answer) ? curr : prev)
+      return (Math.abs(curr - answerNorm) < Math.abs(prev - answerNorm) ? curr : prev)
     },0);
     const theLabelIndex = labelsReversed[indexOf(numberRangeArray, output)]
 
@@ -55,11 +55,22 @@ export default function ResearchAnswerSlider({ dataObject, handleAnswer}) {
     defaultValueInt = answer;
 
 
-  },[answer,variable]);
+  },[variable]);
+
+  const calcLabel  = (val) => {
+    const answerNorm = Math.round((maximumValue - answer));
+    const output = numberRangeArray.reduce((prev, curr) => {
+      return (Math.abs(curr - answerNorm) < Math.abs(prev - answerNorm) ? curr : prev)
+    },0);
+    const theLabelIndex = labelsReversed[indexOf(numberRangeArray, output)];
+
+    setLabelSelected(theLabelIndex);
+  }
 
 
  const onValueChange =  (val) => {
   setAnswer(val)
+  calcLabel(val)
   }
 
  const onSlidingComplete = () => {
