@@ -22,7 +22,7 @@
     "moment": "^2.26.0",
     "normalizr": "^3.4.1",
     "prop-types": "^15.7.2",
-    "qs": "^6.9.1",
+    "qs": "^6.9.7",
     "react": "16.9.0",
     "react-native": "0.61.5",
     "react-native-elements": "^3.3.1",
